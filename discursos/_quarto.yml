@@ -1,0 +1,31 @@
+project:
+  type: website
+
+website:
+  title: "Introducción a R — Universidad de Navarra"
+  navbar:
+    left:
+      - text: "Parte I: Fundamentos"
+        href: index.qmd#parte-i
+      - text: "Parte II: Estructuras"
+        href: index.qmd#parte-ii
+      - text: "Parte III: Análisis"
+        href: index.qmd#parte-iii
+      - text: "Parte IV: Aplicación"
+        href: index.qmd#parte-iv
+    right:
+      - text: "Universidad de Navarra"
+        href: https://www.unav.edu
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    toc-title: "Contenidos"
+    number-sections: false
+    smooth-scroll: true
+    code-fold: false
+    code-tools: true
+    highlight-style: github
