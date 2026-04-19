@@ -1,0 +1,404 @@
+## Parte I: Fundamentos de R y del entorno de trabajo {#parte-i}
+
+### Qué es R
+
+R es un lenguaje de programación estadístico diseñado específicamente para el análisis de datos, la estadística y la visualización. A diferencia de Excel, R es reproducible, extensible y gratuito. Los análisis se expresan como código: eso significa que cualquier colega puede replicar exactamente lo que has hecho.
+
+En lingüística, R se usa para análisis de corpus, estadística de frecuencias, modelado de variación lingüística y visualización de patrones en el lenguaje.
+
+### R y RStudio
+
+Son dos cosas distintas pero complementarias:
+
+- **R** es el motor: el lenguaje que interpreta y ejecuta el código.
+- **RStudio** es el entorno: la interfaz que facilita trabajar con R.
+
+La analogía habitual es que R es el motor del coche y RStudio es el salpicadero.
+
+### El entorno de trabajo en RStudio
+
+RStudio se organiza en cuatro paneles:
+
+| Panel | Ubicación | Para qué sirve |
+|---|---|---|
+| Script | Arriba izquierda | Escribir y guardar el código |
+| Console | Abajo izquierda | Ver resultados y ejecutar líneas sueltas |
+| Environment | Arriba derecha | Ver los objetos creados en la sesión |
+| Files / Plots / Packages | Abajo derecha | Gestionar archivos y ver gráficos |
+
+### R como calculadora
+
+La forma más directa de empezar: R evalúa expresiones y devuelve resultados inmediatamente.
+
+```{r}
+2 + 3
+10 / 4
+2 ^ 8
+sqrt(144)
+```
+
+También tiene funciones estadísticas básicas:
+
+```{r}
+sum(1, 2, 3, 4, 5)
+mean(c(1, 2, 3, 4, 5))
+```
+
+### Asignación de objetos
+
+El operador `<-` guarda un valor bajo un nombre. Ese nombre queda disponible en el Environment para usarlo después.
+
+```{r}
+mi_nombre <- "Ana García"
+edad      <- 23
+aprobado  <- TRUE
+
+mi_nombre
+edad + 10
+```
+
+### Tipos de datos fundamentales
+
+```{r}
+# Numérico
+x <- 3.14
+class(x)
+
+# Texto (character)
+palabra <- "lingüística"
+class(palabra)
+
+# Lógico
+es_sustantivo <- TRUE
+class(es_sustantivo)
+```
+
+::: {.ejercicio}
+**Ejercicio 1**
+
+1. Calcula cuántas palabras habría en un texto de 5 páginas si cada página tiene 250 palabras.
+2. Crea un objeto llamado `autor` con tu nombre completo entre comillas.
+3. Crea un objeto `anyo_nac` con tu año de nacimiento y calcula tu edad: `2025 - anyo_nac`.
+4. Usa `class()` sobre cada objeto. ¿Qué tipo de dato devuelve cada uno?
+:::
+
+---
+
+## Parte II: Estructuras de datos y manipulación básica {#parte-ii}
+
+### Vectores
+
+Un vector es una colección ordenada de elementos del mismo tipo. Es el bloque fundamental de R: casi todo en R es un vector. Se crean con la función `c()` (*combine*).
+
+```{r}
+# Vector de longitudes de palabras
+longitudes <- c(3, 5, 2, 8, 4, 6, 3, 7)
+
+mean(longitudes)
+median(longitudes)
+max(longitudes)
+length(longitudes)
+```
+
+```{r}
+# Vector de texto
+palabras <- c("casa", "árbol", "luz", "universidad")
+nchar(palabras)   # número de caracteres de cada palabra
+```
+
+### Data frames
+
+Un data frame es una tabla: las filas son observaciones y las columnas son variables. Es la estructura más habitual para trabajar con datos en R. Piensa en él como en la hoja de anotación de un corpus: cada fila es una unidad (palabra, enunciado, texto) y cada columna es una propiedad anotada.
+
+```{r}
+corpus <- data.frame(
+  palabra    = c("casa", "árbol", "correr", "azul"),
+  categoria  = c("sustantivo", "sustantivo", "verbo", "adjetivo"),
+  silabas    = c(2, 2, 3, 2),
+  frecuencia = c(8420, 3105, 5622, 4890)
+)
+
+corpus
+```
+
+### Exploración inicial
+
+```{r}
+str(corpus)       # estructura del objeto
+summary(corpus)   # resumen estadístico
+nrow(corpus)      # número de filas
+ncol(corpus)      # número de columnas
+```
+
+### Acceso y selección de variables
+
+```{r}
+# Acceder a una columna con $
+corpus$palabra
+corpus$frecuencia
+
+# Acceder por posición [fila, columna]
+corpus[1, ]        # primera fila completa
+corpus[, 2]        # segunda columna completa
+corpus[2, 3]       # fila 2, columna 3
+```
+
+### Filtrado de observaciones
+
+```{r}
+corpus[corpus$silabas == 2, ]
+corpus[corpus$frecuencia > 5000, ]
+corpus[corpus$categoria == "sustantivo", ]
+```
+
+::: {.ejercicio}
+**Ejercicio 2**
+
+Crea un data frame llamado `mi_corpus` con al menos 5 palabras de tu elección y las columnas `palabra`, `categoria` y `longitud`.
+
+1. Usa `str(mi_corpus)` para inspeccionar la estructura. ¿Qué tipo tiene cada columna?
+2. Accede a la columna de longitud con `$` y calcula la media.
+3. Filtra solo las palabras con más de 5 caracteres.
+4. **Reto:** ¿Cuántas palabras son sustantivos en tu corpus?
+:::
+
+---
+
+## Parte III: Análisis de datos y visualización básica {#parte-iii}
+
+### Instalación y carga de paquetes
+
+Los paquetes amplían las capacidades de R. Solo hay que instalarlos una vez; cargarlos hay que hacerlo en cada sesión.
+
+```{r}
+#| eval: false
+install.packages(c("dplyr", "ggplot2", "readr"))
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+### Importación de datos externos
+
+```{r}
+#| eval: false
+# Importar un CSV estándar
+datos <- read_csv("corpus_discursos.csv")
+
+# Si el CSV usa punto y coma (habitual en español)
+datos <- read_csv2("corpus_discursos.csv")
+
+glimpse(datos)
+```
+
+Para esta sesión trabajamos con un dataset de ejemplo que construimos directamente:
+
+```{r}
+set.seed(42)
+discursos <- data.frame(
+  orador     = rep(c("Orador A", "Orador B", "Orador C", "Orador D"), each = 15),
+  partido    = rep(c("Partido 1", "Partido 2", "Partido 1", "Partido 2"), each = 15),
+  anyo       = sample(2010:2023, 60, replace = TRUE),
+  n_palabras = round(rnorm(60, mean = 600, sd = 150)),
+  n_oraciones= round(rnorm(60, mean = 30, sd = 8))
+)
+
+glimpse(discursos)
+```
+
+### Manipulación con dplyr
+
+`dplyr` ofrece verbos intuitivos para transformar datos. El operador `|>` (*pipe*) encadena operaciones de izquierda a derecha, como instrucciones en lenguaje natural.
+
+```{r}
+# select(): seleccionar columnas
+discursos |> select(orador, anyo, n_palabras)
+```
+
+```{r}
+# filter(): filtrar filas por condición
+discursos |> filter(anyo >= 2018)
+```
+
+```{r}
+# mutate(): crear nuevas variables
+discursos |> mutate(palabras_por_oracion = n_palabras / n_oraciones)
+```
+
+```{r}
+# Encadenando operaciones
+discursos |>
+  filter(anyo >= 2018) |>
+  select(orador, partido, n_palabras) |>
+  mutate(palabras_k = round(n_palabras / 1000, 2)) |>
+  arrange(desc(n_palabras))
+```
+
+### Estadística descriptiva
+
+```{r}
+# Resumen global
+discursos |>
+  summarise(
+    media_palabras   = mean(n_palabras),
+    mediana_palabras = median(n_palabras),
+    total_discursos  = n()
+  )
+```
+
+```{r}
+# Agrupado por partido
+discursos |>
+  group_by(partido) |>
+  summarise(
+    media  = round(mean(n_palabras), 1),
+    n_disc = n()
+  ) |>
+  arrange(desc(media))
+```
+
+```{r}
+# Frecuencias de una variable categórica
+discursos |> count(orador, sort = TRUE)
+```
+
+### Visualización con ggplot2
+
+`ggplot2` usa una gramática de gráficos: defines los datos, el mapeo estético (`aes`) y la geometría (`geom_*`). Cada capa se añade con `+`.
+
+```{r}
+# Histograma de longitud de discursos
+ggplot(discursos, aes(x = n_palabras)) +
+  geom_histogram(bins = 20, fill = "#c8102e", color = "white") +
+  labs(
+    title = "Distribución de longitud de discursos",
+    x     = "Número de palabras",
+    y     = "Frecuencia"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Gráfico de barras: discursos por orador
+discursos |>
+  count(orador) |>
+  ggplot(aes(x = reorder(orador, n), y = n, fill = orador)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Discursos por orador", x = NULL, y = "N") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+::: {.ejercicio}
+**Ejercicio 3**
+
+Usando el dataset `discursos`:
+
+1. Calcula la longitud media de los discursos por partido con `group_by()` y `summarise()`.
+2. Filtra los discursos posteriores a 2018 y crea la variable `ratio` (palabras / oraciones).
+3. Genera un histograma de la longitud. ¿La distribución es simétrica?
+4. **Reto:** Crea un gráfico de barras con la media de palabras por partido, ordenado de mayor a menor.
+:::
+
+---
+
+## Parte IV: Aplicación integrada {#parte-iv}
+
+En esta parte integramos todo lo aprendido en un pipeline completo: importación, exploración, estadística y visualización, aplicado a un corpus de discursos políticos.
+
+### Exploración del corpus
+
+```{r}
+summary(discursos)
+```
+
+### Estadísticas descriptivas por orador
+
+```{r}
+resumen <- discursos |>
+  group_by(orador, partido) |>
+  summarise(
+    n_discursos     = n(),
+    media_palabras  = round(mean(n_palabras), 1),
+    media_oraciones = round(mean(n_oraciones), 1),
+    ratio_pal_or    = round(mean(n_palabras / n_oraciones), 2),
+    .groups = "drop"
+  )
+
+resumen
+```
+
+### Identificación de patrones en el lenguaje
+
+Calculamos la complejidad oracional media (palabras por oración) como indicador del estilo discursivo de cada orador.
+
+```{r}
+resumen |>
+  arrange(desc(ratio_pal_or)) |>
+  select(orador, partido, ratio_pal_or)
+```
+
+### Representación gráfica de resultados
+
+```{r}
+ggplot(resumen,
+       aes(x = reorder(orador, ratio_pal_or),
+           y = ratio_pal_or,
+           fill = partido)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title    = "Complejidad oracional por orador",
+    subtitle = "Ratio palabras / oración (media)",
+    x        = NULL,
+    y        = "Palabras por oración",
+    fill     = "Partido"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+### Evolución temporal
+
+```{r}
+discursos |>
+  group_by(anyo) |>
+  summarise(media_longitud = mean(n_palabras), n = n()) |>
+  ggplot(aes(x = anyo, y = media_longitud)) +
+  geom_line(color = "#c8102e", linewidth = 1) +
+  geom_point(color = "#c8102e", size = 2.5) +
+  labs(
+    title = "Evolución de la longitud media de discursos",
+    x     = "Año",
+    y     = "Palabras (media)"
+  ) +
+  theme_minimal()
+```
+
+::: {.ejercicio}
+**Ejercicio final**
+
+Elige una de estas preguntas de investigación y produce un gráfico que la responda:
+
+- **Opción A — Variación temporal:** ¿Ha cambiado la longitud media de los discursos a lo largo de los años? Usa `geom_line()`.
+- **Opción B — Comparación entre hablantes:** ¿Hay diferencias entre partidos en la complejidad oracional? Usa un gráfico de barras agrupado con `fill = partido`.
+- **Opción C — Exploración propia:** Formula tu propia hipótesis sobre algún patrón en los datos y represéntala gráficamente.
+
+Para cada gráfico, añade título, etiquetas de ejes y escribe dos frases interpretando el resultado.
+:::
+
+---
+
+## Para seguir aprendiendo
+
+| Recurso | Descripción |
+|---|---|
+| [R for Data Science](https://r4ds.hadley.nz) | Manual de referencia, gratuito online |
+| [Text Mining with R](https://tidytextmining.com) | Análisis de texto con tidytext |
+| `quanteda` | Lingüística de corpus en R |
+| `udpipe` | Anotación morfosintáctica multilingüe |
+| Posit Community | Foro oficial de la comunidad R |
