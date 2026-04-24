@@ -10,7 +10,7 @@ Para seguir este curso necesitas tres herramientas instaladas en tu ordenador. I
 
 Descarga el instalador `.exe` desde la web oficial de CRAN y ejecútalo con las opciones por defecto:
 
-👉 [https://cran.r-project.org/bin/windows/base/](https://cran.r-project.org/bin/windows/base/)
+[https://cran.r-project.org/bin/windows/base/](https://cran.r-project.org/bin/windows/base/)
 
 ---
 
@@ -18,7 +18,7 @@ Descarga el instalador `.exe` desde la web oficial de CRAN y ejecútalo con las 
 
 RStudio es el entorno desde el que escribirás y ejecutarás tu código. Descarga la versión gratuita *Open Source Edition*:
 
-👉 [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+[https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
 > ⚠️ Instala RStudio **después** de R. RStudio detecta automáticamente la instalación de R al arrancar.
 
@@ -28,7 +28,7 @@ RStudio es el entorno desde el que escribirás y ejecutarás tu código. Descarg
 
 Solo necesario si quieres generar documentos o presentaciones reproducibles (como esta misma página):
 
-👉 [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+[https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 ### 🍎 macOS
 
@@ -39,7 +39,7 @@ Descarga el paquete `.pkg` desde CRAN. Elige la versión según tu chip:
 - **Apple Silicon (M1 / M2 / M3):** descarga el archivo con `arm64` en el nombre
 - **Intel:** descarga el archivo con `x86_64` en el nombre
 
-👉 [https://cran.r-project.org/bin/macosx/](https://cran.r-project.org/bin/macosx/)
+[https://cran.r-project.org/bin/macosx/](https://cran.r-project.org/bin/macosx/)
 
 ---
 
@@ -47,7 +47,7 @@ Descarga el paquete `.pkg` desde CRAN. Elige la versión según tu chip:
 
 Descarga el `.dmg`, ábrelo y arrastra RStudio a la carpeta Aplicaciones:
 
-👉 [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+/[https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
 > 💡 Si macOS bloquea el instalador de R, ve a **Ajustes del sistema → Privacidad y seguridad** y haz clic en "Abrir igualmente".
 
@@ -57,7 +57,7 @@ Descarga el `.dmg`, ábrelo y arrastra RStudio a la carpeta Aplicaciones:
 
 Solo necesario si quieres generar documentos o presentaciones reproducibles (como esta misma página):
 
-👉 [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+[https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 :::
 
