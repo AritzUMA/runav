@@ -5,6 +5,8 @@ website:
   title: "Introducción a R — Universidad de Navarra"
   navbar:
     left:
+      - text: "Instalación"
+        href: index.qmd#instalacion
       - text: "Parte I: Fundamentos"
         href: index.qmd#parte-i
       - text: "Parte II: Estructuras"
