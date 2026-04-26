@@ -1,2 +1,7 @@
 /.quarto/
 /_site/
+site_libs/
+discursos/index.html
+discursos/index_files/
+*.html
+_site/
