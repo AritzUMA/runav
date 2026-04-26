@@ -15,6 +15,8 @@ website:
         href: index.qmd#parte-iii
       - text: "Parte IV: Aplicación"
         href: index.qmd#parte-iv
+      - text: "Parte V: VOX y Podemos"
+        href: index.qmd#parte-v
     right:
       - text: "Universidad de Navarra"
         href: https://www.unav.edu

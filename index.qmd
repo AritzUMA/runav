@@ -10,7 +10,7 @@ Para seguir este curso necesitas tres herramientas instaladas en tu ordenador. I
 
 Descarga el instalador `.exe` desde la web oficial de CRAN y ejecútalo con las opciones por defecto:
 
-[https://cran.r-project.org/bin/windows/base/](https://cran.r-project.org/bin/windows/base/)
+👉 [https://cran.r-project.org/bin/windows/base/](https://cran.r-project.org/bin/windows/base/)
 
 ---
 
@@ -18,7 +18,7 @@ Descarga el instalador `.exe` desde la web oficial de CRAN y ejecútalo con las 
 
 RStudio es el entorno desde el que escribirás y ejecutarás tu código. Descarga la versión gratuita *Open Source Edition*:
 
-[https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+👉 [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
 > ⚠️ Instala RStudio **después** de R. RStudio detecta automáticamente la instalación de R al arrancar.
 
@@ -28,7 +28,7 @@ RStudio es el entorno desde el que escribirás y ejecutarás tu código. Descarg
 
 Solo necesario si quieres generar documentos o presentaciones reproducibles (como esta misma página):
 
-[https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+👉 [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 ### 🍎 macOS
 
@@ -39,7 +39,7 @@ Descarga el paquete `.pkg` desde CRAN. Elige la versión según tu chip:
 - **Apple Silicon (M1 / M2 / M3):** descarga el archivo con `arm64` en el nombre
 - **Intel:** descarga el archivo con `x86_64` en el nombre
 
-[https://cran.r-project.org/bin/macosx/](https://cran.r-project.org/bin/macosx/)
+👉 [https://cran.r-project.org/bin/macosx/](https://cran.r-project.org/bin/macosx/)
 
 ---
 
@@ -47,7 +47,7 @@ Descarga el paquete `.pkg` desde CRAN. Elige la versión según tu chip:
 
 Descarga el `.dmg`, ábrelo y arrastra RStudio a la carpeta Aplicaciones:
 
-/[https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+👉 [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
 > 💡 Si macOS bloquea el instalador de R, ve a **Ajustes del sistema → Privacidad y seguridad** y haz clic en "Abrir igualmente".
 
@@ -57,7 +57,7 @@ Descarga el `.dmg`, ábrelo y arrastra RStudio a la carpeta Aplicaciones:
 
 Solo necesario si quieres generar documentos o presentaciones reproducibles (como esta misma página):
 
-[https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+👉 [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 :::
 
@@ -118,8 +118,6 @@ RStudio se organiza en cuatro paneles:
 
 ### R como calculadora
 
-La forma más directa de empezar: R evalúa expresiones y devuelve resultados inmediatamente.
-
 ```{r}
 2 + 3
 10 / 4
@@ -127,16 +125,12 @@ La forma más directa de empezar: R evalúa expresiones y devuelve resultados in
 sqrt(144)
 ```
 
-También tiene funciones estadísticas básicas:
-
 ```{r}
 sum(1, 2, 3, 4, 5)
 mean(c(1, 2, 3, 4, 5))
 ```
 
 ### Asignación de objetos
-
-El operador `<-` guarda un valor bajo un nombre. Ese nombre queda disponible en el Environment para usarlo después.
 
 ```{r}
 mi_nombre <- "Ana García"
@@ -150,15 +144,12 @@ edad + 10
 ### Tipos de datos fundamentales
 
 ```{r}
-# Numérico
 x <- 3.14
 class(x)
 
-# Texto (character)
 palabra <- "lingüística"
 class(palabra)
 
-# Lógico
 es_sustantivo <- TRUE
 class(es_sustantivo)
 ```
@@ -178,10 +169,7 @@ class(es_sustantivo)
 
 ### Vectores
 
-Un vector es una colección ordenada de elementos del mismo tipo. Es el bloque fundamental de R: casi todo en R es un vector. Se crean con la función `c()` (*combine*).
-
 ```{r}
-# Vector de longitudes de palabras
 longitudes <- c(3, 5, 2, 8, 4, 6, 3, 7)
 
 mean(longitudes)
@@ -191,54 +179,49 @@ length(longitudes)
 ```
 
 ```{r}
-# Vector de texto
 palabras <- c("casa", "árbol", "luz", "universidad")
-nchar(palabras)   # número de caracteres de cada palabra
+nchar(palabras)
 ```
 
 ### Data frames
 
-Un data frame es una tabla: las filas son observaciones y las columnas son variables. Es la estructura más habitual para trabajar con datos en R. Piensa en él como en la hoja de anotación de un corpus: cada fila es una unidad (palabra, enunciado, texto) y cada columna es una propiedad anotada.
-
 ```{r}
-corpus <- data.frame(
+corpus_ejemplo <- data.frame(
   palabra    = c("casa", "árbol", "correr", "azul"),
   categoria  = c("sustantivo", "sustantivo", "verbo", "adjetivo"),
   silabas    = c(2, 2, 3, 2),
   frecuencia = c(8420, 3105, 5622, 4890)
 )
 
-corpus
+corpus_ejemplo
 ```
 
 ### Exploración inicial
 
 ```{r}
-str(corpus)       # estructura del objeto
-summary(corpus)   # resumen estadístico
-nrow(corpus)      # número de filas
-ncol(corpus)      # número de columnas
+str(corpus_ejemplo)
+summary(corpus_ejemplo)
+nrow(corpus_ejemplo)
+ncol(corpus_ejemplo)
 ```
 
 ### Acceso y selección de variables
 
 ```{r}
-# Acceder a una columna con $
-corpus$palabra
-corpus$frecuencia
+corpus_ejemplo$palabra
+corpus_ejemplo$frecuencia
 
-# Acceder por posición [fila, columna]
-corpus[1, ]        # primera fila completa
-corpus[, 2]        # segunda columna completa
-corpus[2, 3]       # fila 2, columna 3
+corpus_ejemplo[1, ]
+corpus_ejemplo[, 2]
+corpus_ejemplo[2, 3]
 ```
 
 ### Filtrado de observaciones
 
 ```{r}
-corpus[corpus$silabas == 2, ]
-corpus[corpus$frecuencia > 5000, ]
-corpus[corpus$categoria == "sustantivo", ]
+corpus_ejemplo[corpus_ejemplo$silabas == 2, ]
+corpus_ejemplo[corpus_ejemplo$frecuencia > 5000, ]
+corpus_ejemplo[corpus_ejemplo$categoria == "sustantivo", ]
 ```
 
 ::: {.ejercicio}
@@ -254,131 +237,136 @@ Crea un data frame llamado `mi_corpus` con al menos 5 palabras de tu elección y
 
 ---
 
+## Carga del corpus real {#carga}
+
+A partir de aquí trabajamos con un corpus real de transcripciones de discursos políticos sobre inmigración en España. Los textos están alojados en GitHub. El código es completamente reproducible.
+
+```{r}
+library(dplyr)
+library(readr)
+library(stringr)
+library(purrr)
+library(ggplot2)
+
+base_url <- "https://raw.githubusercontent.com/AritzUMA/runav/main/discursos/"
+
+archivos <- c(
+  "VOX_1.txt", "VOX_2.txt", "VOX_3.txt", "VOX_4.txt",
+  "VOX_5.txt", "VOX_6.txt", "VOX_7.txt",
+  "PODEMOS_1.txt", "PODEMOS_2.txt", "PODEMOS_3.txt",
+  "PODEMOS_4.txt", "PODEMOS_5.txt"
+)
+
+leer_discurso <- function(archivo) {
+  url     <- paste0(base_url, archivo)
+  texto   <- read_lines(url) |> paste(collapse = " ")
+  partido <- str_extract(archivo, "^[A-Z]+")
+  id      <- str_remove(archivo, "\\.txt$")
+  tibble(
+    id                 = id,
+    partido            = partido,
+    texto              = texto,
+    n_palabras         = str_count(texto, "\\S+"),
+    n_chars            = nchar(texto),
+    long_media_palabra = round(nchar(texto) / str_count(texto, "\\S+"), 2)
+  )
+}
+
+corpus <- map(archivos, leer_discurso) |> list_rbind()
+glimpse(corpus)
+```
+
+---
+
 ## Parte III: Análisis de datos y visualización básica {#parte-iii}
 
 ### Instalación y carga de paquetes
 
-Los paquetes amplían las capacidades de R. Solo hay que instalarlos una vez; cargarlos hay que hacerlo en cada sesión.
-
 ```{r}
 #| eval: false
-install.packages(c("dplyr", "ggplot2", "readr"))
+install.packages(c("dplyr", "ggplot2", "readr", "stringr", "purrr", "tidytext", "syuzhet"))
 ```
 
-```{r}
-library(dplyr)
-library(ggplot2)
-library(readr)
-```
-
-### Importación de datos externos
+### Exploración inicial del corpus
 
 ```{r}
-#| eval: false
-# Importar un CSV estándar
-datos <- read_csv("corpus_discursos.csv")
+corpus |> select(id, partido, n_palabras, n_chars, long_media_palabra)
 
-# Si el CSV usa punto y coma (habitual en español)
-datos <- read_csv2("corpus_discursos.csv")
-
-glimpse(datos)
-```
-
-Para esta sesión trabajamos con un dataset de ejemplo que construimos directamente:
-
-```{r}
-set.seed(42)
-discursos <- data.frame(
-  orador     = rep(c("Orador A", "Orador B", "Orador C", "Orador D"), each = 15),
-  partido    = rep(c("Partido 1", "Partido 2", "Partido 1", "Partido 2"), each = 15),
-  anyo       = sample(2010:2023, 60, replace = TRUE),
-  n_palabras = round(rnorm(60, mean = 600, sd = 150)),
-  n_oraciones= round(rnorm(60, mean = 30, sd = 8))
-)
-
-glimpse(discursos)
+summary(corpus |> select(n_palabras, n_chars, long_media_palabra))
 ```
 
 ### Manipulación con dplyr
 
-`dplyr` ofrece verbos intuitivos para transformar datos. El operador `|>` (*pipe*) encadena operaciones de izquierda a derecha, como instrucciones en lenguaje natural.
-
 ```{r}
-# select(): seleccionar columnas
-discursos |> select(orador, anyo, n_palabras)
+corpus |> select(id, partido, n_palabras)
 ```
 
 ```{r}
-# filter(): filtrar filas por condición
-discursos |> filter(anyo >= 2018)
+corpus |> filter(partido == "VOX")
 ```
 
 ```{r}
-# mutate(): crear nuevas variables
-discursos |> mutate(palabras_por_oracion = n_palabras / n_oraciones)
+corpus |>
+  mutate(n_palabras_k = round(n_palabras / 1000, 2)) |>
+  select(id, partido, n_palabras, n_palabras_k)
 ```
 
 ```{r}
-# Encadenando operaciones
-discursos |>
-  filter(anyo >= 2018) |>
-  select(orador, partido, n_palabras) |>
-  mutate(palabras_k = round(n_palabras / 1000, 2)) |>
+corpus |>
+  select(id, partido, n_palabras, long_media_palabra) |>
   arrange(desc(n_palabras))
 ```
 
 ### Estadística descriptiva
 
 ```{r}
-# Resumen global
-discursos |>
+corpus |>
   summarise(
-    media_palabras   = mean(n_palabras),
+    media_palabras   = round(mean(n_palabras), 0),
     mediana_palabras = median(n_palabras),
     total_discursos  = n()
   )
 ```
 
 ```{r}
-# Agrupado por partido
-discursos |>
+corpus |>
   group_by(partido) |>
   summarise(
-    media  = round(mean(n_palabras), 1),
-    n_disc = n()
+    n_discursos        = n(),
+    media_palabras     = round(mean(n_palabras), 0),
+    mediana_palabras   = median(n_palabras),
+    long_media_palabra = round(mean(long_media_palabra), 2)
   ) |>
-  arrange(desc(media))
-```
-
-```{r}
-# Frecuencias de una variable categórica
-discursos |> count(orador, sort = TRUE)
+  arrange(desc(media_palabras))
 ```
 
 ### Visualización con ggplot2
 
-`ggplot2` usa una gramática de gráficos: defines los datos, el mapeo estético (`aes`) y la geometría (`geom_*`). Cada capa se añade con `+`.
-
 ```{r}
-# Histograma de longitud de discursos
-ggplot(discursos, aes(x = n_palabras)) +
-  geom_histogram(bins = 20, fill = "#c8102e", color = "white") +
+ggplot(corpus, aes(x = n_palabras, fill = partido)) +
+  geom_histogram(bins = 12, color = "white", alpha = 0.8) +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
   labs(
-    title = "Distribución de longitud de discursos",
+    title = "Distribución de longitud de los discursos",
     x     = "Número de palabras",
-    y     = "Frecuencia"
+    y     = "Frecuencia",
+    fill  = "Partido"
   ) +
   theme_minimal()
 ```
 
 ```{r}
-# Gráfico de barras: discursos por orador
-discursos |>
-  count(orador) |>
-  ggplot(aes(x = reorder(orador, n), y = n, fill = orador)) +
-  geom_col() +
-  coord_flip() +
-  labs(title = "Discursos por orador", x = NULL, y = "N") +
+corpus |>
+  group_by(partido) |>
+  summarise(media = mean(n_palabras)) |>
+  ggplot(aes(x = reorder(partido, media), y = media, fill = partido)) +
+  geom_col(width = 0.5) +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
+  labs(
+    title = "Longitud media de discursos por partido",
+    x     = NULL,
+    y     = "Palabras (media)"
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 ```
@@ -386,99 +374,270 @@ discursos |>
 ::: {.ejercicio}
 **Ejercicio 3**
 
-Usando el dataset `discursos`:
-
-1. Calcula la longitud media de los discursos por partido con `group_by()` y `summarise()`.
-2. Filtra los discursos posteriores a 2018 y crea la variable `ratio` (palabras / oraciones).
-3. Genera un histograma de la longitud. ¿La distribución es simétrica?
-4. **Reto:** Crea un gráfico de barras con la media de palabras por partido, ordenado de mayor a menor.
+1. ¿Cuál es la longitud media en palabras de los discursos de VOX? ¿Y de PODEMOS?
+2. Filtra los discursos con más de 1000 palabras. ¿De qué partido son?
+3. Crea una nueva variable `densidad = n_palabras / n_chars`. ¿Qué mide lingüísticamente?
+4. **Reto:** Genera un histograma de `long_media_palabra` separado por partido.
 :::
 
 ---
 
 ## Parte IV: Aplicación integrada {#parte-iv}
 
-En esta parte integramos todo lo aprendido en un pipeline completo: importación, exploración, estadística y visualización, aplicado a un corpus de discursos políticos.
-
-### Exploración del corpus
+### Estadísticas descriptivas completas
 
 ```{r}
-summary(discursos)
-```
-
-### Estadísticas descriptivas por orador
-
-```{r}
-resumen <- discursos |>
-  group_by(orador, partido) |>
+corpus |>
+  group_by(partido) |>
   summarise(
-    n_discursos     = n(),
-    media_palabras  = round(mean(n_palabras), 1),
-    media_oraciones = round(mean(n_oraciones), 1),
-    ratio_pal_or    = round(mean(n_palabras / n_oraciones), 2),
+    n_discursos        = n(),
+    total_palabras     = sum(n_palabras),
+    media_palabras     = round(mean(n_palabras), 0),
+    sd_palabras        = round(sd(n_palabras), 0),
+    long_media_palabra = round(mean(long_media_palabra), 2),
     .groups = "drop"
   )
-
-resumen
 ```
 
 ### Identificación de patrones en el lenguaje
 
-Calculamos la complejidad oracional media (palabras por oración) como indicador del estilo discursivo de cada orador.
-
 ```{r}
-resumen |>
-  arrange(desc(ratio_pal_or)) |>
-  select(orador, partido, ratio_pal_or)
+corpus |>
+  select(id, partido, n_palabras, long_media_palabra) |>
+  arrange(desc(long_media_palabra))
 ```
 
 ### Representación gráfica de resultados
 
 ```{r}
-ggplot(resumen,
-       aes(x = reorder(orador, ratio_pal_or),
-           y = ratio_pal_or,
-           fill = partido)) +
-  geom_col() +
-  coord_flip() +
+ggplot(corpus, aes(x = partido, y = n_palabras, fill = partido)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.15, size = 2.5, alpha = 0.7) +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
   labs(
-    title    = "Complejidad oracional por orador",
-    subtitle = "Ratio palabras / oración (media)",
+    title    = "Longitud de los discursos por partido",
+    subtitle = "Cada punto es un discurso",
     x        = NULL,
-    y        = "Palabras por oración",
-    fill     = "Partido"
+    y        = "Número de palabras"
   ) +
   theme_minimal(base_size = 13) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "none")
 ```
 
-### Evolución temporal
+```{r}
+ggplot(corpus, aes(x = partido, y = long_media_palabra, fill = partido)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.15, size = 2.5, alpha = 0.7) +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
+  labs(
+    title    = "Complejidad léxica por partido",
+    subtitle = "Longitud media de palabra (caracteres / palabras)",
+    x        = NULL,
+    y        = "Longitud media de palabra"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
 
 ```{r}
-discursos |>
-  group_by(anyo) |>
-  summarise(media_longitud = mean(n_palabras), n = n()) |>
-  ggplot(aes(x = anyo, y = media_longitud)) +
-  geom_line(color = "#c8102e", linewidth = 1) +
-  geom_point(color = "#c8102e", size = 2.5) +
+ggplot(corpus, aes(x = n_palabras, y = long_media_palabra, color = partido)) +
+  geom_point(size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.8) +
+  scale_color_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
   labs(
-    title = "Evolución de la longitud media de discursos",
-    x     = "Año",
-    y     = "Palabras (media)"
+    title = "Longitud vs. complejidad léxica",
+    x     = "Número de palabras",
+    y     = "Longitud media de palabra",
+    color = "Partido"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+::: {.ejercicio}
+**Ejercicio 4**
+
+1. ¿Qué partido presenta mayor variabilidad en longitud? Usa `sd()` dentro de `summarise()`.
+2. Identifica el discurso más largo y el más corto. ¿De qué partido son?
+3. ¿Existe correlación entre `n_palabras` y `long_media_palabra`? Usa `cor()`.
+4. **Reto:** Genera un gráfico de puntos con `n_palabras` en X y `long_media_palabra` en Y, coloreado por partido.
+:::
+
+---
+
+## Parte V: Análisis textual — Frecuencias, stopwords y análisis emocional {#parte-v}
+
+### Tokenización del corpus
+
+```{r}
+library(tidytext)
+
+tokens <- corpus |>
+  select(id, partido, texto) |>
+  unnest_tokens(palabra, texto)
+
+tokens |> count(partido)
+```
+
+### Palabras más frecuentes por partido (frecuencias brutas)
+
+```{r}
+tokens |>
+  count(partido, palabra, sort = TRUE) |>
+  group_by(partido) |>
+  slice_max(n, n = 15) |>
+  ggplot(aes(x = reorder(palabra, n), y = n, fill = partido)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~partido, scales = "free_y") +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
+  coord_flip() +
+  labs(
+    title = "15 palabras más frecuentes por partido (sin filtrar)",
+    x     = NULL,
+    y     = "Frecuencia"
   ) +
   theme_minimal()
 ```
 
+### Stopwords: qué son y para qué sirven
+
+Cuando analizamos frecuencias brutas, las palabras más comunes no son las más informativas: artículos, preposiciones y conjunciones dominan cualquier corpus. Estas palabras vacías se denominan **stopwords** y se eliminan antes del análisis para revelar el vocabulario sustantivo.
+
+```{r}
+stop_es <- get_stopwords(language = "es")
+
+stop_custom <- tibble(word = c("si", "ser", "asi", "ahi", "aqui",
+                               "tan", "tal", "hay", "ver", "van",
+                               "vez", "anos", "ano", "hoy", "dia",
+                               "bueno", "claro", "entonces", "pues"))
+
+stop_todas <- bind_rows(stop_es, stop_custom)
+```
+
+### Frecuencias limpias (sin stopwords)
+
+```{r}
+tokens_limpios <- tokens |>
+  filter(!palabra %in% stop_todas$word) |>
+  filter(nchar(palabra) > 2)
+
+tokens_limpios |>
+  count(partido, palabra, sort = TRUE) |>
+  group_by(partido) |>
+  slice_max(n, n = 15) |>
+  ggplot(aes(x = reorder(palabra, n), y = n, fill = partido)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~partido, scales = "free_y") +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
+  coord_flip() +
+  labs(
+    title = "15 palabras más frecuentes por partido (sin stopwords)",
+    x     = NULL,
+    y     = "Frecuencia"
+  ) +
+  theme_minimal()
+```
+
+### El léxico NRC en español: emociones y polaridad
+
+El NRC Emotion Lexicon asocia palabras a ocho emociones básicas y dos polaridades. Usamos `syuzhet` con el NRC traducido al español.
+
+```{r}
+library(syuzhet)
+
+get_nrc_sentiment(c("migrante", "ilegal", "acogida", "expulsión"), language = "spanish")
+```
+
+### Análisis emocional del corpus con NRC
+
+```{r}
+palabras_unicas <- unique(tokens_limpios$palabra)
+
+nrc_scores <- get_nrc_sentiment(palabras_unicas, language = "spanish")
+nrc_scores$palabra <- palabras_unicas
+
+tokens_nrc <- tokens_limpios |>
+  left_join(nrc_scores, by = "palabra")
+
+emociones <- tokens_nrc |>
+  group_by(partido) |>
+  summarise(
+    anger        = sum(anger),
+    anticipation = sum(anticipation),
+    disgust      = sum(disgust),
+    fear         = sum(fear),
+    joy          = sum(joy),
+    sadness      = sum(sadness),
+    surprise     = sum(surprise),
+    trust        = sum(trust),
+    negative     = sum(negative),
+    positive     = sum(positive)
+  )
+
+emociones
+```
+
+```{r}
+emociones |>
+  tidyr::pivot_longer(-partido, names_to = "emocion", values_to = "n") |>
+  filter(!emocion %in% c("positive", "negative")) |>
+  ggplot(aes(x = reorder(emocion, n), y = n, fill = partido)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
+  coord_flip() +
+  labs(
+    title = "Distribución emocional por partido (NRC en español)",
+    x     = NULL,
+    y     = "Suma de palabras con esa emoción",
+    fill  = "Partido"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+```{r}
+emociones |>
+  tidyr::pivot_longer(-partido, names_to = "emocion", values_to = "n") |>
+  filter(emocion %in% c("positive", "negative")) |>
+  ggplot(aes(x = partido, y = n, fill = emocion)) +
+  geom_col(position = "fill") +
+  scale_fill_manual(values = c("positive" = "#4caf50", "negative" = "#f44336")) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Polaridad del discurso por partido",
+    x     = NULL,
+    y     = "Proporción",
+    fill  = "Polaridad"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### Palabras clave sobre inmigración
+
+```{r}
+terminos_clave <- c("migrantes", "inmigrantes", "ilegales", "regularizar",
+                    "fronteras", "expulsion", "acogida", "derechos")
+
+tokens |>
+  filter(palabra %in% terminos_clave) |>
+  count(partido, palabra) |>
+  ggplot(aes(x = reorder(palabra, n), y = n, fill = partido)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
+  coord_flip() +
+  labs(
+    title = "Frecuencia de términos clave por partido",
+    x     = NULL,
+    y     = "Frecuencia absoluta",
+    fill  = "Partido"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
 ::: {.ejercicio}
-**Ejercicio final**
+**Ejercicio 5 — Análisis libre**
 
-Elige una de estas preguntas de investigación y produce un gráfico que la responda:
-
-- **Opción A — Variación temporal:** ¿Ha cambiado la longitud media de los discursos a lo largo de los años? Usa `geom_line()`.
-- **Opción B — Comparación entre hablantes:** ¿Hay diferencias entre partidos en la complejidad oracional? Usa un gráfico de barras agrupado con `fill = partido`.
-- **Opción C — Exploración propia:** Formula tu propia hipótesis sobre algún patrón en los datos y represéntala gráficamente.
-
-Para cada gráfico, añade título, etiquetas de ejes y escribe dos frases interpretando el resultado.
+- **Opción A:** Añade más términos al vector `terminos_clave`. ¿Cambia el patrón entre partidos?
+- **Opción B:** ¿Qué emoción predomina en cada partido según el NRC? ¿Coincide con lo que esperabas?
+- **Opción C:** Calcula la frecuencia relativa de cada emoción. ¿Cambia la comparación respecto a la frecuencia absoluta?
 :::
 
 ---
@@ -492,3 +651,13 @@ Para cada gráfico, añade título, etiquetas de ejes y escribe dos frases inter
 | `quanteda` | Lingüística de corpus en R |
 | `udpipe` | Anotación morfosintáctica multilingüe |
 | Posit Community | Foro oficial de la comunidad R |
+
+## Entornos de desarrollo (IDEs)
+
+| IDE | Descripción | Ideal para |
+|---|---|---|
+| RStudio | El estándar para R. Gratuito y completo | Quien trabaja solo con R |
+| Positron | Sucesor de RStudio, también de Posit. Aún en beta | R + Python en el mismo entorno |
+| VS Code | Editor generalista muy popular. Requiere extensión R | Perfiles más técnicos |
+| Jupyter | Notebooks interactivos. Muy usado en ciencia de datos | Análisis exploratorio y docencia |
+| Neovim/Emacs | Editores avanzados para usuarios expertos | Perfiles con experiencia en terminal |
