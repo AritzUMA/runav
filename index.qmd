@@ -643,6 +643,7 @@ as.data.frame(similitud) |>
 `udpipe` permite anotar texto en español automáticamente: asigna a cada palabra su **categoría gramatical** (sustantivo, verbo, adjetivo...), su **lema** y sus **dependencias sintácticas**. Esto va mucho más allá del análisis de frecuencias — nos permite preguntar, por ejemplo, qué adjetivos acompañan a la palabra "inmigrante".
 
 ```{r}
+#| eval: false
 library(udpipe)
 ```
 
@@ -656,6 +657,7 @@ udpipe_download_model(language = "spanish")
 ```
 
 ```{r}
+#| eval: false
 modelo <- udpipe_load_model("spanish-gsd-ud-2.5-191206.udpipe")
 ```
 
@@ -664,6 +666,7 @@ modelo <- udpipe_load_model("spanish-gsd-ud-2.5-191206.udpipe")
 Anotamos el primer discurso de VOX como ejemplo:
 
 ```{r}
+#| eval: false
 texto_vox <- corpus |>
   filter(id == "VOX_1") |>
   pull(texto)
@@ -681,6 +684,7 @@ anotado |>
 ### Categorías gramaticales (UPOS)
 
 ```{r}
+#| eval: false
 # Distribución de categorías gramaticales
 anotado |>
   count(upos, sort = TRUE) |>
@@ -702,6 +706,7 @@ Las categorías más comunes en texto político:
 El **lema** es la forma canónica de una palabra. Trabajar con lemas evita que "inmigrante", "inmigrantes" e "inmigrando" se cuenten como palabras distintas.
 
 ```{r}
+#| eval: false
 # Sustantivos más frecuentes (por lema)
 anotado |>
   filter(upos == "NOUN") |>
@@ -710,6 +715,7 @@ anotado |>
 ```
 
 ```{r}
+#| eval: false
 # Adjetivos más frecuentes
 anotado |>
   filter(upos == "ADJ") |>
@@ -720,6 +726,7 @@ anotado |>
 ### Colocaciones: qué adjetivos acompañan a "inmigrante"
 
 ```{r}
+#| eval: false
 # Adjetivos que modifican a sustantivos relacionados con inmigración
 terminos_inm <- c("inmigrante", "migrante", "extranjero", "ilegal")
 
