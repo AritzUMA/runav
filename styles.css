@@ -1,115 +1,137 @@
 /* Paleta Universidad de Navarra */
 :root {
-  --unav-rojo: #c8102e;
+  --unav-rojo:  #c1001f;
   --unav-negro: #1a1714;
-  --unav-crema: #faf8f4;
+  --fondo:      #f2f2f0;
+  --superficie: #ffffff;
+  --borde:      #e0e0dc;
+  --texto:      #2a2a2a;
+  --texto-suave:#666660;
+}
+
+/* Fondo general */
+body {
+  background-color: var(--fondo);
+  color: var(--texto);
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.97rem;
+  line-height: 1.75;
+}
+
+/* Área de contenido principal */
+#quarto-content {
+  background-color: var(--superficie);
+  border-radius: 6px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
 /* Navbar */
 .navbar {
-  background-color: var(--unav-negro) !important;
-  border-bottom: 3px solid var(--unav-rojo);
+  background-color: var(--unav-rojo) !important;
+  border-bottom: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 
 .navbar-brand, .navbar-nav .nav-link {
-  color: rgba(255,255,255,0.85) !important;
-  font-family: 'Georgia', serif;
+  color: rgba(255,255,255,0.9) !important;
+  font-weight: 500;
 }
 
 .navbar-nav .nav-link:hover {
   color: white !important;
 }
 
-/* Cabecera principal */
-.hero-banner {
-  background: var(--unav-negro);
-  color: white;
-  padding: 3rem 2rem;
-  margin-bottom: 2.5rem;
-  border-bottom: 4px solid var(--unav-rojo);
-}
-
-.hero-banner h1 {
-  font-family: Georgia, serif;
-  font-size: 2.8rem;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-}
-
-.hero-banner .subtitulo {
-  color: rgba(255,255,255,0.6);
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.hero-banner .meta-grid {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.hero-banner .meta-item .etiqueta {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.35);
-}
-
-.hero-banner .meta-item .valor {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.8);
-}
-
-/* Encabezados de sección */
+/* Encabezados */
 h2 {
-  font-family: Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: var(--unav-negro);
-  border-left: 4px solid var(--unav-rojo);
-  padding-left: 0.75rem;
-  margin-top: 3rem;
+  border-left: 3px solid var(--unav-rojo);
+  padding-left: 0.65rem;
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
 }
 
 h3 {
-  color: var(--unav-negro);
-  font-size: 1.1rem;
-  margin-top: 1.75rem;
-}
-
-/* Callout de ejercicio personalizado */
-.ejercicio {
-  background: #fffbf0;
-  border: 1px solid #e8d89a;
-  border-left: 5px solid #c8a020;
-  border-radius: 4px;
-  padding: 1.25rem 1.5rem;
-  margin: 1.5rem 0;
-}
-
-.ejercicio .ejercicio-titulo {
+  font-size: 1.05rem;
   font-weight: 600;
-  color: #7a5f00;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  color: var(--texto);
+  margin-top: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
 /* Tabla de contenidos */
 #TOC {
-  border-left: 3px solid var(--unav-rojo);
-  padding-left: 1rem;
+  font-size: 0.85rem;
+  border-left: 2px solid var(--borde);
+  padding-left: 0.85rem;
 }
 
 #TOC a {
-  color: var(--unav-negro);
+  color: var(--texto-suave);
+  text-decoration: none;
 }
 
 #TOC a:hover {
   color: var(--unav-rojo);
 }
 
+/* Ejercicios */
+.ejercicio {
+  background: #fafaf8;
+  border: 1px solid var(--borde);
+  border-left: 3px solid #c8a020;
+  border-radius: 4px;
+  padding: 1.1rem 1.4rem;
+  margin: 1.5rem 0;
+  font-size: 0.93rem;
+}
+
 /* Código */
-pre, code {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.85em;
+pre {
+  background-color: #f7f7f5 !important;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  font-size: 0.84em;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.84em;
+  color: #b5001a;
+  background: #f7f7f5;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+pre code {
+  color: inherit;
+  background: none;
+  padding: 0;
+}
+
+/* Tablas */
+table {
+  font-size: 0.9rem;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+thead {
+  background-color: var(--fondo);
+  border-bottom: 2px solid var(--borde);
+}
+
+td, th {
+  padding: 0.5rem 0.85rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+/* HR */
+hr {
+  border: none;
+  border-top: 1px solid var(--borde);
+  margin: 2.5rem 0;
 }
