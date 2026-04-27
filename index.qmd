@@ -114,16 +114,12 @@ remotes::install_github("tidyverse/ggplot2")
 
 ### Actualizar paquetes
 
-Con el tiempo los paquetes reciben actualizaciones. Para actualizarlos todos de una vez:
-
 ```{r}
 #| eval: false
 update.packages(ask = FALSE)
 ```
 
 ### Instalar los paquetes del curso
-
-Ejecuta esto **una sola vez** en la consola de RStudio antes de empezar:
 
 ```{r}
 #| eval: false
@@ -154,9 +150,136 @@ Las **cheatsheets** son hojas de referencia de una o dos páginas que resumen la
 | `lubridate` | Fechas y tiempos | [descargar](https://posit.co/wp-content/uploads/2022/10/lubridate-1.pdf) |
 | `quanteda` | Lingüística de corpus | [descargar](https://muellerstefan.net/files/quanteda-cheatsheet.pdf) |
 
-Puedes encontrar todas las cheatsheets oficiales de Posit aquí:
+Todas las cheatsheets oficiales de Posit: 👉 [https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)
 
-👉 [https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)
+---
+
+## RMarkdown y Quarto: documentos reproducibles {#rmarkdown}
+
+### Qué es RMarkdown
+
+**RMarkdown** es un formato de documento que combina texto, código R y resultados en un único archivo `.Rmd`. Al ejecutarlo (*knit*), R procesa el código y genera un documento final en HTML, PDF o Word con los resultados incrustados. Es el estándar para hacer análisis reproducibles y comunicables.
+
+**Quarto** (`.qmd`) es el sucesor moderno de RMarkdown, desarrollado por el mismo equipo. Es más flexible, soporta Python y Julia además de R, y es el formato que usa este curso.
+
+La estructura de cualquier documento RMarkdown o Quarto tiene tres partes:
+
+```
+---
+title: "Mi análisis"
+author: "Tu nombre"
+format: html
+---
+
+Aquí escribes texto normal en **Markdown**.
+
+```{r}
+# Aquí escribes código R
+mean(c(1, 2, 3, 4, 5))
+```
+```
+
+### Crear un nuevo documento
+
+::: {.panel-tabset}
+
+### RMarkdown (.Rmd)
+
+En RStudio: `File → New File → R Markdown...`
+
+Elige el título, autor y formato de salida (HTML recomendado para empezar). RStudio genera una plantilla con ejemplos que puedes modificar.
+
+Para compilar el documento y ver el resultado: botón **Knit** (o `Ctrl+Shift+K` / `Cmd+Shift+K`).
+
+### Quarto (.qmd)
+
+En RStudio o Positron: `File → New File → Quarto Document...`
+
+Para compilar: botón **Render** (o `Ctrl+Shift+K` / `Cmd+Shift+K`).
+
+:::
+
+### Anatomía de un chunk de código
+
+Un **chunk** es un bloque de código R dentro del documento. Se delimita con tres backticks y `{r}`:
+
+````
+```{r}
+#| label: mi-grafico
+#| echo: true
+#| eval: true
+#| warning: false
+
+ggplot(corpus, aes(x = partido)) + geom_bar()
+```
+````
+
+Las opciones más comunes son:
+
+| Opción | Valores | Efecto |
+|---|---|---|
+| `echo` | true / false | Mostrar u ocultar el código |
+| `eval` | true / false | Ejecutar o no el código |
+| `warning` | true / false | Mostrar u ocultar avisos |
+| `message` | true / false | Mostrar u ocultar mensajes |
+| `fig-width` | número | Ancho del gráfico en pulgadas |
+| `fig-height` | número | Alto del gráfico en pulgadas |
+
+---
+
+## Atajos de teclado esenciales {#atajos}
+
+Conocer los atajos más importantes acelera mucho el trabajo en RStudio y Positron.
+
+### Atajos generales
+
+::: {.panel-tabset}
+
+### 🪟 Windows / Linux
+
+| Acción | Atajo |
+|---|---|
+| Ejecutar línea o selección | `Ctrl + Enter` |
+| Ejecutar todo el script | `Ctrl + Shift + Enter` |
+| Insertar operador de asignación `<-` | `Alt + -` |
+| Insertar pipe `\|>` | `Ctrl + Shift + M` |
+| Insertar nuevo chunk de código | `Ctrl + Alt + I` |
+| Compilar documento (Knit / Render) | `Ctrl + Shift + K` |
+| Comentar / descomentar línea | `Ctrl + Shift + C` |
+| Buscar y reemplazar | `Ctrl + H` |
+| Autocompletar | `Tab` |
+| Ir a la definición de una función | `F2` |
+| Limpiar la consola | `Ctrl + L` |
+| Nueva pestaña de script | `Ctrl + Shift + N` |
+| Guardar archivo | `Ctrl + S` |
+
+### 🍎 macOS
+
+| Acción | Atajo |
+|---|---|
+| Ejecutar línea o selección | `Cmd + Enter` |
+| Ejecutar todo el script | `Cmd + Shift + Enter` |
+| Insertar operador de asignación `<-` | `Option + -` |
+| Insertar pipe `\|>` | `Cmd + Shift + M` |
+| Insertar nuevo chunk de código | `Cmd + Option + I` |
+| Compilar documento (Knit / Render) | `Cmd + Shift + K` |
+| Comentar / descomentar línea | `Cmd + Shift + C` |
+| Buscar y reemplazar | `Cmd + H` |
+| Autocompletar | `Tab` |
+| Ir a la definición de una función | `F2` |
+| Limpiar la consola | `Ctrl + L` |
+| Nueva pestaña de script | `Cmd + Shift + N` |
+| Guardar archivo | `Cmd + S` |
+
+:::
+
+### Los tres más importantes para empezar
+
+Si solo vas a recordar tres atajos, que sean estos:
+
+- **`Alt + -`** (Windows) / **`Option + -`** (Mac) — inserta `<-` sin tener que escribirlo carácter a carácter. Lo usarás constantemente.
+- **`Ctrl/Cmd + Enter`** — ejecuta la línea donde está el cursor. No hace falta seleccionar nada.
+- **`Ctrl/Cmd + Alt/Option + I`** — inserta un chunk de código nuevo en RMarkdown o Quarto.
 
 ---
 
@@ -186,8 +309,6 @@ RStudio tiene cuatro paneles:
 
 ### R como calculadora
 
-Lo más básico: R evalúa expresiones y devuelve resultados.
-
 ```{r}
 2 + 3
 10 / 4
@@ -211,25 +332,19 @@ edad + 10
 ### Tipos de datos
 
 ```{r}
-# Numérico
 x <- 3.14
 class(x)
 
-# Texto (character)
 palabra <- "lingüística"
 class(palabra)
 
-# Lógico
 es_verbo <- FALSE
 class(es_verbo)
 ```
 
 ### Vectores
 
-Un vector es una colección ordenada de elementos del mismo tipo. Es la estructura más básica de R.
-
 ```{r}
-# Vector numérico: longitudes de palabras
 longitudes <- c(3, 5, 2, 8, 4, 6, 3, 7)
 
 mean(longitudes)
@@ -238,9 +353,8 @@ length(longitudes)
 ```
 
 ```{r}
-# Vector de texto
 palabras <- c("casa", "árbol", "luz", "universidad")
-nchar(palabras)   # número de caracteres de cada palabra
+nchar(palabras)
 ```
 
 ::: {.ejercicio}
@@ -264,8 +378,6 @@ El **tidyverse** es una colección de paquetes de R diseñados para trabajar jun
 library(tidyverse)
 ```
 
-El paquete central es `dplyr`, que ofrece cinco verbos para transformar datos:
-
 | Verbo | Qué hace |
 |---|---|
 | `select()` | Seleccionar columnas |
@@ -276,13 +388,11 @@ El paquete central es `dplyr`, que ofrece cinco verbos para transformar datos:
 
 ### Tibbles: datos ordenados
 
-Un **tibble** es la versión tidyverse de un data frame. Cada fila es una observación, cada columna es una variable.
-
 ```{r}
 corpus_mini <- tibble(
-  palabra   = c("casa", "árbol", "correr", "azul", "rápido"),
-  categoria = c("sustantivo", "sustantivo", "verbo", "adjetivo", "adjetivo"),
-  silabas   = c(2, 2, 3, 2, 3),
+  palabra    = c("casa", "árbol", "correr", "azul", "rápido"),
+  categoria  = c("sustantivo", "sustantivo", "verbo", "adjetivo", "adjetivo"),
+  silabas    = c(2, 2, 3, 2, 3),
   frecuencia = c(8420, 3105, 5622, 4890, 2310)
 )
 
@@ -291,32 +401,23 @@ corpus_mini
 
 ### El pipe: `|>`
 
-El operador `|>` (*pipe*) pasa el resultado de una operación a la siguiente. Permite leer el código de izquierda a derecha, como una frase en español.
-
 ```{r}
-# Sin pipe — difícil de leer
+# Sin pipe
 arrange(filter(corpus_mini, silabas > 2), frecuencia)
 
-# Con pipe — mucho más claro
+# Con pipe
 corpus_mini |>
   filter(silabas > 2) |>
   arrange(frecuencia)
 ```
 
-### `select()` — elegir columnas
+### `select()`, `filter()`, `mutate()`
 
 ```{r}
 corpus_mini |> select(palabra, frecuencia)
-```
-
-### `filter()` — filtrar filas
-
-```{r}
 corpus_mini |> filter(categoria == "sustantivo")
 corpus_mini |> filter(frecuencia > 5000)
 ```
-
-### `mutate()` — crear variables nuevas
 
 ```{r}
 corpus_mini |>
@@ -324,7 +425,7 @@ corpus_mini |>
   select(palabra, silabas, n_chars)
 ```
 
-### `summarise()` y `group_by()` — resúmenes por grupo
+### `summarise()` y `group_by()`
 
 ```{r}
 corpus_mini |>
@@ -335,8 +436,6 @@ corpus_mini |>
     media_sil  = round(mean(silabas), 1)
   )
 ```
-
-### `arrange()` — ordenar
 
 ```{r}
 corpus_mini |> arrange(desc(frecuencia))
@@ -359,7 +458,7 @@ Usando `corpus_mini`:
 
 ### El corpus: discursos políticos sobre inmigración
 
-Trabajamos con 12 transcripciones reales de discursos de VOX (7) y Podemos (5) sobre inmigración en España. Los textos están alojados en GitHub y se cargan directamente desde R — no hace falta descargar nada manualmente.
+Trabajamos con 12 transcripciones reales de discursos de VOX (7) y Podemos (5) sobre inmigración en España. Los textos están alojados en GitHub y se cargan directamente desde R.
 
 ```{r}
 library(readr)
@@ -429,7 +528,7 @@ corpus |>
 
 ### Qué es tidytext
 
-`tidytext` aplica la filosofía tidyverse al texto: convierte documentos en tablas donde **cada fila es una palabra**. Esto permite usar todos los verbos de dplyr que ya conocemos para analizar texto.
+`tidytext` aplica la filosofía tidyverse al texto: convierte documentos en tablas donde **cada fila es una palabra**.
 
 ```{r}
 library(tidytext)
@@ -437,17 +536,12 @@ library(tidytext)
 
 ### Tokenización
 
-**Tokenizar** significa dividir un texto en unidades mínimas — aquí, palabras. La función `unnest_tokens()` hace exactamente eso.
-
 ```{r}
 tokens <- corpus |>
   select(id, partido, texto) |>
   unnest_tokens(palabra, texto)
 
 tokens
-```
-
-```{r}
 tokens |> count(partido)
 ```
 
@@ -460,11 +554,7 @@ tokens |>
   slice_max(n, n = 10)
 ```
 
-Como era de esperar, dominan artículos, preposiciones y conjunciones — palabras sin contenido analítico.
-
 ### Stopwords
-
-Las **stopwords** son palabras vacías que conviene eliminar antes del análisis. `tidytext` incluye listas en varios idiomas.
 
 ```{r}
 stop_es <- get_stopwords(language = "es")
@@ -497,8 +587,6 @@ tokens_limpios |>
 
 ### TF-IDF: palabras distintivas
 
-La **frecuencia bruta** favorece palabras comunes a ambos partidos. El **TF-IDF** (*Term Frequency–Inverse Document Frequency*) identifica las palabras más características de cada partido frente al otro.
-
 ```{r}
 tfidf <- tokens_limpios |>
   count(partido, palabra) |>
@@ -520,8 +608,6 @@ tfidf
 :::
 
 ### Análisis emocional con NRC
-
-El **NRC Emotion Lexicon** asocia palabras a 8 emociones básicas (alegría, tristeza, miedo, ira, sorpresa, asco, anticipación, confianza) y 2 polaridades (positivo/negativo). El paquete `syuzhet` incluye el NRC traducido al español.
 
 ```{r}
 library(syuzhet)
@@ -597,7 +683,7 @@ tokens |>
 
 ### Qué es quanteda
 
-`quanteda` es el paquete de referencia para lingüística de corpus en R. Su unidad central es el **corpus object** — una estructura optimizada para almacenar y analizar grandes colecciones de textos.
+`quanteda` es el paquete de referencia para lingüística de corpus en R.
 
 ```{r}
 library(quanteda)
@@ -646,13 +732,7 @@ topfeatures(dfm_partido, n = 15)
 
 ```{r}
 kwic(toks, pattern = "inmigrantes", window = 5)
-```
-
-```{r}
 kwic(toks, pattern = "ilegales", window = 5)
-```
-
-```{r}
 kwic(toks, pattern = "migr*", window = 4)
 ```
 
@@ -688,17 +768,11 @@ as.data.frame(similitud) |>
 
 ### Qué es udpipe
 
-`udpipe` permite anotar texto en español automáticamente: asigna a cada palabra su **categoría gramatical** (sustantivo, verbo, adjetivo...), su **lema** y sus **dependencias sintácticas**.
+`udpipe` permite anotar texto en español automáticamente: categoría gramatical, lema y dependencias sintácticas.
 
 ```{r}
 #| eval: false
 library(udpipe)
-```
-
-### Descargar el modelo de español
-
-```{r}
-#| eval: false
 udpipe_download_model(language = "spanish")
 modelo <- udpipe_load_model("spanish-gsd-ud-2.5-191206.udpipe")
 ```
@@ -707,26 +781,20 @@ modelo <- udpipe_load_model("spanish-gsd-ud-2.5-191206.udpipe")
 
 ```{r}
 #| eval: false
-texto_vox <- corpus |>
-  filter(id == "VOX_1") |>
-  pull(texto)
+texto_vox <- corpus |> filter(id == "VOX_1") |> pull(texto)
 
 anotado <- udpipe_annotate(modelo, x = texto_vox, doc_id = "VOX_1") |>
   as.data.frame() |>
   as_tibble()
 
-anotado |>
-  select(token, lemma, upos, dep_rel) |>
-  head(20)
+anotado |> select(token, lemma, upos, dep_rel) |> head(20)
 ```
 
 ### Categorías gramaticales (UPOS)
 
 ```{r}
 #| eval: false
-anotado |>
-  count(upos, sort = TRUE) |>
-  filter(!is.na(upos))
+anotado |> count(upos, sort = TRUE) |> filter(!is.na(upos))
 ```
 
 | UPOS | Categoría |
@@ -747,22 +815,15 @@ anotado |> filter(upos == "ADJ")  |> count(lemma, sort = TRUE) |> head(15)
 
 ```{r}
 #| eval: false
-terminos_inm <- c("inmigrante", "migrante", "extranjero", "ilegal")
-
-anotado |>
-  filter(lemma %in% terminos_inm) |>
-  select(token, lemma, upos, head_token_id, dep_rel)
+c("inmigrante", "migrante", "extranjero", "ilegal") |>
+  (\(x) anotado |> filter(lemma %in% x) |> select(token, lemma, upos, dep_rel))()
 ```
 
 ### Anotar todo el corpus
 
 ```{r}
 #| eval: false
-corpus_anotado <- udpipe_annotate(
-  modelo,
-  x      = corpus$texto,
-  doc_id = corpus$id
-) |>
+corpus_anotado <- udpipe_annotate(modelo, x = corpus$texto, doc_id = corpus$id) |>
   as.data.frame() |>
   as_tibble() |>
   left_join(corpus |> select(id, partido), by = c("doc_id" = "id"))
@@ -796,17 +857,7 @@ corpus_anotado |>
 
 ### La gramática de gráficos
 
-`ggplot2` construye gráficos por capas. Cada gráfico necesita tres elementos:
-
-1. **Datos** — el tibble que contiene la información
-2. **Estética** (`aes()`) — qué variable va en cada eje, qué define el color
-3. **Geometría** (`geom_*`) — qué tipo de gráfico se dibuja
-
-```{r}
-# Estructura básica
-# ggplot(datos, aes(x = variable_x, y = variable_y)) +
-#   geom_tipo()
-```
+`ggplot2` construye gráficos por capas: datos, estética (`aes()`) y geometría (`geom_*`).
 
 ### Gráfico de barras
 
@@ -815,12 +866,7 @@ ggplot(corpus, aes(x = reorder(id, n_palabras), y = n_palabras, fill = partido))
   geom_col() +
   coord_flip() +
   scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
-  labs(
-    title = "Longitud de cada discurso",
-    x     = NULL,
-    y     = "Número de palabras",
-    fill  = "Partido"
-  ) +
+  labs(title = "Longitud de cada discurso", x = NULL, y = "Número de palabras", fill = "Partido") +
   theme_minimal()
 ```
 
@@ -830,12 +876,7 @@ ggplot(corpus, aes(x = reorder(id, n_palabras), y = n_palabras, fill = partido))
 ggplot(corpus, aes(x = n_palabras, fill = partido)) +
   geom_histogram(bins = 10, color = "white", alpha = 0.8) +
   scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
-  labs(
-    title = "Distribución de longitud de los discursos",
-    x     = "Número de palabras",
-    y     = "Frecuencia",
-    fill  = "Partido"
-  ) +
+  labs(title = "Distribución de longitud de los discursos", x = "Número de palabras", y = "Frecuencia", fill = "Partido") +
   theme_minimal()
 ```
 
@@ -852,11 +893,7 @@ tokens_limpios |>
   coord_flip() +
   scale_x_reordered() +
   scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
-  labs(
-    title = "15 palabras más frecuentes por partido",
-    x     = NULL,
-    y     = "Frecuencia"
-  ) +
+  labs(title = "15 palabras más frecuentes por partido", x = NULL, y = "Frecuencia") +
   theme_minimal()
 ```
 
@@ -870,18 +907,13 @@ emociones |>
   geom_col(position = "dodge") +
   coord_flip() +
   scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
-  labs(
-    title = "Perfil emocional NRC por partido",
-    x     = NULL,
-    y     = "Palabras con esa emoción",
-    fill  = "Partido"
-  ) +
+  labs(title = "Perfil emocional NRC por partido", x = NULL, y = "Palabras con esa emoción", fill = "Partido") +
   theme_minimal(base_size = 13)
 ```
 
 ### Referencia visual: R Graph Gallery
 
-Para saber qué tipo de gráfico usar según tus datos, la [**R Graph Gallery**](https://r-graph-gallery.com/ggplot2-package.html) es el recurso más completo disponible. Organiza todos los tipos de gráficos de `ggplot2` por categoría y tipo de variable, e incluye el código completo para cada uno.
+Para saber qué tipo de gráfico usar según tus datos, la [**R Graph Gallery**](https://r-graph-gallery.com/ggplot2-package.html) organiza todos los tipos de gráficos de `ggplot2` por categoría e incluye el código completo para cada uno.
 
 | Tipo de datos | Gráfico recomendado | Enlace |
 |---|---|---|
