@@ -587,36 +587,63 @@ tfidf
 
 ### Análisis emocional con NRC
 
-El **NRC Emotion Lexicon** asocia palabras a 8 emociones y 2 polaridades. Usamos `syuzhet` con el NRC traducido al español. Para comparar entre partidos con distinto volumen de texto, **normalizamos por el total de tokens de cada partido**.
+El **NRC Emotion Lexicon** es un recurso léxico que asocia palabras a 8 emociones básicas (ira, anticipación, asco, miedo, alegría, tristeza, sorpresa, confianza) y 2 polaridades (positivo/negativo). Fue desarrollado por Saif Mohammad y Peter Turney y está disponible en múltiples idiomas, incluido el español. Lo cargamos a través del paquete `syuzhet`.
+
+Para comparar entre partidos con distinto volumen de texto, **normalizamos por el total de tokens de cada partido**: en lugar de contar cuántas palabras tienen carga emocional, calculamos cuántas hay por cada 1.000 tokens. Así la comparación es justa independientemente del tamaño del corpus de cada partido.
+
+#### Paso 1 — Cargar syuzhet y comprobar el léxico
 
 ```{r}
 library(syuzhet)
 
-# Ejemplo con palabras individuales
+# Probamos el léxico con cinco palabras del corpus
+# Cada columna es una emoción o polaridad
+# El valor es 1 si la palabra tiene esa asociación, 0 si no
 get_nrc_sentiment(
   c("migrante", "ilegal", "acogida", "expulsión", "derechos"),
   language = "spanish"
 )
 ```
 
-```{r}
-# Calcular puntuaciones NRC para todos los tokens limpios
-palabras_unicas <- unique(tokens_limpios$palabra)
-nrc_scores      <- get_nrc_sentiment(palabras_unicas, language = "spanish")
-nrc_scores$palabra <- palabras_unicas
+#### Paso 2 — Puntuar todos los tokens limpios
 
+```{r}
+# Extraemos todas las palabras únicas del corpus limpio
+# para no repetir llamadas al léxico con la misma palabra
+palabras_unicas <- unique(tokens_limpios$palabra)
+
+# get_nrc_sentiment() devuelve una fila por palabra
+# con una puntuación (0 o 1) para cada emoción
+nrc_scores         <- get_nrc_sentiment(palabras_unicas, language = "spanish")
+nrc_scores$palabra <- palabras_unicas  # añadimos la columna de texto para poder hacer el join
+
+# Unimos las puntuaciones NRC al dataframe de tokens
+# Ahora cada token tiene asociada su carga emocional
 tokens_nrc <- tokens_limpios |>
   left_join(nrc_scores, by = "palabra")
+```
 
-# Total de tokens por partido (para normalizar)
+#### Paso 3 — Calcular el total de tokens por partido (denominador)
+
+```{r}
+# Necesitamos saber cuántos tokens tiene cada partido
+# para poder normalizar las frecuencias emocionales
 total_tokens <- tokens_limpios |>
   count(partido, name = "total")
 
-# Perfil emocional normalizado por 1.000 tokens
+total_tokens
+```
+
+#### Paso 4 — Agregar emociones y normalizar
+
+```{r}
+# Sumamos las puntuaciones de cada emoción por partido
+# Luego dividimos por el total de tokens y multiplicamos por 1.000
+# El resultado es "palabras con esa emoción por cada 1.000 tokens"
 emociones <- tokens_nrc |>
   group_by(partido) |>
   summarise(
-    ira          = sum(anger),
+    ira          = sum(anger),        # anger en el léxico NRC
     anticipacion = sum(anticipation),
     asco         = sum(disgust),
     miedo        = sum(fear),
@@ -628,14 +655,18 @@ emociones <- tokens_nrc |>
     positivo     = sum(positive)
   ) |>
   left_join(total_tokens, by = "partido") |>
+  # across() aplica la misma operación a todas las columnas de ira a positivo
   mutate(across(ira:positivo, ~ round(.x / total * 1000, 2))) |>
-  select(-total)
+  select(-total)  # eliminamos la columna auxiliar
 
 emociones
 ```
 
+#### Paso 5 — Polaridad relativa
+
 ```{r}
-# Polaridad relativa (proporcional)
+# Calculamos qué proporción del vocabulario emocional es positiva o negativa
+# pct_neg + pct_pos = 100 para cada partido
 emociones |>
   mutate(
     total_pol = negativo + positivo,
@@ -645,14 +676,18 @@ emociones |>
   select(partido, negativo, positivo, pct_neg, pct_pos)
 ```
 
+#### Paso 6 — Visualización
+
 ```{r}
-# Visualización del perfil emocional normalizado
-emociones |>
+# pivot_longer() transforma el dataframe de formato ancho a largo:
+# en lugar de una columna por emoción, tenemos una fila por emoción
+# Esto es lo que necesita ggplot2 para hacer el gráfico facetado
+grafico_nrc <- emociones |>
   pivot_longer(-partido, names_to = "emocion", values_to = "por_mil") |>
-  filter(!emocion %in% c("negativo", "positivo")) |>
+  filter(!emocion %in% c("negativo", "positivo")) |>  # excluimos polaridad
   ggplot(aes(x = reorder(emocion, por_mil), y = por_mil, fill = partido)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
+  geom_col(position = "dodge") +   # barras agrupadas, una por partido
+  coord_flip() +                    # giramos para leer mejor las etiquetas
   scale_fill_manual(values = c("PODEMOS" = "#6a0dad", "VOX" = "#2e7d32")) +
   labs(
     title    = "Perfil emocional NRC por partido (normalizado)",
@@ -662,7 +697,27 @@ emociones |>
     fill     = "Partido"
   ) +
   theme_minimal(base_size = 13)
+
+grafico_nrc
 ```
+
+#### Paso 7 — Exportar el gráfico en alta resolución
+
+```{r}
+# ggsave() guarda el último gráfico generado (o el objeto especificado)
+# dpi = 300 es el estándar para publicación académica
+# width y height en pulgadas; 7x5 es un tamaño habitual para artículos
+ggsave(
+  filename = "perfil_emocional_nrc.png",
+  plot     = grafico_nrc,
+  width    = 8,
+  height   = 5,
+  dpi      = 300,
+  bg       = "white"   # fondo blanco explícito (evita fondos transparentes)
+)
+```
+
+> El archivo `perfil_emocional_nrc.png` se guarda en el directorio de trabajo. Puedes comprobarlo con `getwd()`. Para otros formatos académicos usa `filename = "grafico.pdf"` (vectorial, sin pérdida de calidad) o `filename = "grafico.tiff"` (requerido por algunas revistas).
 
 ### Palabras clave sobre inmigración
 
