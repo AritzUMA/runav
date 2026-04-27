@@ -2,13 +2,26 @@ project:
   type: website
 
 website:
-  title: "Introducción a R para las Ciencias del Lenguaje"
+  title: "Introducción a R para Lingüistas"
   navbar:
-    logo: https://www.unav.edu/documents/10162/30622995/Marca+Universidad+de+Navarra_200__white.png/75601112-72f9-4940-a060-0a15ab28a11c?t=1635332708035
-    logo-alt: "Universidad de Navarra"
-    logo-href: https://www.unav.edu
-    background: "#c1001f"
-    foreground: white
+    background: dark
+    left:
+      - text: "Antes de empezar"
+        href: index.qmd#instalacion
+      - text: "Parte I: R básico"
+        href: index.qmd#parte-i
+      - text: "Parte II: Tidyverse"
+        href: index.qmd#parte-ii
+      - text: "Parte III: Corpus"
+        href: index.qmd#parte-iii
+      - text: "Parte IV: tidytext"
+        href: index.qmd#parte-iv
+      - text: "Parte V: quanteda"
+        href: index.qmd#parte-v
+      - text: "Parte VI: udpipe"
+        href: index.qmd#parte-vi
+      - text: "Parte VII: ggplot2"
+        href: index.qmd#parte-vii
     right:
       - text: "Universidad de Navarra"
         href: https://www.unav.edu
@@ -20,8 +33,6 @@ format:
     toc: true
     toc-depth: 2
     toc-title: "Contenidos"
-    number-sections: false
     smooth-scroll: true
-    code-fold: false
     code-tools: true
     highlight-style: github
