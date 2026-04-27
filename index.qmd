@@ -10,20 +10,21 @@ execute:
 
 ```{=html}
 <div class="hero-banner">
-  <h1>Introducción a R para las Ciencias del Lenguaje</h1>
-  <p class="subtitulo">Taller intensivo · Universidad de Navarra · 2 horas</p>
+  <p class="subtitulo">Taller intensivo · Universidad de Navarra</p>
+  <h1>Introducción a R<br>para <em>Lingüistas</em></h1>
+  <p class="gradun">GRADUN — Grupo de Análisis del Discurso</p>
   <div class="meta-grid">
     <div class="meta-item">
-      <div class="etiqueta">Nivel</div>
-      <div class="valor">Introductorio, sin conocimientos previos</div>
+      <span class="etiqueta">Nivel</span>
+      <span class="valor">Introductorio, sin conocimientos previos</span>
     </div>
     <div class="meta-item">
-      <div class="etiqueta">Duración</div>
-      <div class="valor">4 bloques de 30 minutos</div>
+      <span class="etiqueta">Duración</span>
+      <span class="valor">4 bloques de 30 minutos</span>
     </div>
     <div class="meta-item">
-      <div class="etiqueta">Paquetes</div>
-      <div class="valor">tidyverse · tidytext · syuzhet · quanteda · udpipe</div>
+      <span class="etiqueta">Paquetes</span>
+      <span class="valor">tidyverse · tidytext · syuzhet · quanteda · udpipe</span>
     </div>
   </div>
 </div>
