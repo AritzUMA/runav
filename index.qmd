@@ -53,9 +53,77 @@ Descarga el paquete `.pkg` desde CRAN. Elige la versión según tu chip:
 
 :::
 
+---
+
+## Paquetes en R: CRAN, GitHub y cómo usarlos {#paquetes}
+
+### Qué es CRAN
+
+**CRAN** (*Comprehensive R Archive Network*) es el repositorio oficial de paquetes de R. Actualmente alberga más de 20.000 paquetes revisados y mantenidos por la comunidad. Cuando ejecutas `install.packages()`, R descarga el paquete directamente desde CRAN.
+
+👉 [https://cran.r-project.org/](https://cran.r-project.org/)
+
+Puedes buscar paquetes por tema en la sección **Task Views**, que agrupa paquetes por área de aplicación — hay vistas específicas para lingüística, ciencias sociales, análisis de texto y más:
+
+👉 [https://cran.r-project.org/web/views/](https://cran.r-project.org/web/views/)
+
+### Instalar paquetes desde CRAN
+
+La instalación solo hace falta hacerla **una vez** por máquina. Después el paquete queda instalado permanentemente.
+
+```{r}
+#| eval: false
+# Instalar un paquete
+install.packages("dplyr")
+
+# Instalar varios a la vez
+install.packages(c("dplyr", "ggplot2", "tidytext"))
+```
+
+### Cargar paquetes con library()
+
+Aunque el paquete esté instalado, hay que **cargarlo en cada sesión** con `library()` antes de poder usarlo. Es como abrir una aplicación que ya tienes instalada.
+
+```{r}
+#| eval: false
+# Cargar un paquete
+library(dplyr)
+
+# La diferencia entre instalar y cargar:
+# install.packages("dplyr")  → se hace UNA vez, instala el paquete en el disco
+# library(dplyr)             → se hace en CADA sesión, carga el paquete en memoria
+```
+
+> **Regla práctica:** pon todos los `library()` al principio de tu script. Así cualquier persona que lo ejecute sabe desde el principio qué paquetes necesita.
+
+### Instalar paquetes desde GitHub
+
+Algunos paquetes están en desarrollo activo y aún no han llegado a CRAN, o tienen versiones más recientes en GitHub. Para instalarlos se usa el paquete `remotes`:
+
+```{r}
+#| eval: false
+# Primero instalar remotes (solo una vez)
+install.packages("remotes")
+
+# Instalar un paquete desde GitHub
+# remotes::install_github("usuario/nombre_repositorio")
+
+# Ejemplo: versión de desarrollo de ggplot2
+remotes::install_github("tidyverse/ggplot2")
+```
+
+### Actualizar paquetes
+
+Con el tiempo los paquetes reciben actualizaciones. Para actualizarlos todos de una vez:
+
+```{r}
+#| eval: false
+update.packages(ask = FALSE)
+```
+
 ### Instalar los paquetes del curso
 
-Abre RStudio y ejecuta esto una sola vez en la consola:
+Ejecuta esto **una sola vez** en la consola de RStudio antes de empezar:
 
 ```{r}
 #| eval: false
@@ -69,6 +137,26 @@ install.packages(c(
   "udpipe"
 ))
 ```
+
+### Cheatsheets: referencia rápida de cada paquete
+
+Las **cheatsheets** son hojas de referencia de una o dos páginas que resumen las funciones más importantes de cada paquete. Son imprescindibles cuando estás aprendiendo.
+
+| Paquete | Para qué sirve | Cheatsheet |
+|---|---|---|
+| `dplyr` | Manipulación de datos | [descargar](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf) |
+| `ggplot2` | Visualización de datos | [descargar](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf) |
+| `tidyr` | Reorganización de datos | [descargar](https://posit.co/wp-content/uploads/2022/10/tidyr.pdf) |
+| `readr` | Importación de datos | [descargar](https://posit.co/wp-content/uploads/2022/10/data-import.pdf) |
+| `stringr` | Manipulación de texto | [descargar](https://posit.co/wp-content/uploads/2022/10/strings-1.pdf) |
+| `purrr` | Programación funcional | [descargar](https://posit.co/wp-content/uploads/2022/10/purrr.pdf) |
+| `tidytext` | Análisis de texto tidy | [descargar](https://github.com/rstudio/cheatsheets/blob/main/tidytext.pdf) |
+| `lubridate` | Fechas y tiempos | [descargar](https://posit.co/wp-content/uploads/2022/10/lubridate-1.pdf) |
+| `quanteda` | Lingüística de corpus | [descargar](https://muellerstefan.net/files/quanteda-cheatsheet.pdf) |
+
+Puedes encontrar todas las cheatsheets oficiales de Posit aquí:
+
+👉 [https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)
 
 ---
 
@@ -224,19 +312,13 @@ corpus_mini |> select(palabra, frecuencia)
 ### `filter()` — filtrar filas
 
 ```{r}
-# Solo sustantivos
 corpus_mini |> filter(categoria == "sustantivo")
-```
-
-```{r}
-# Palabras con más de 5000 ocurrencias
 corpus_mini |> filter(frecuencia > 5000)
 ```
 
 ### `mutate()` — crear variables nuevas
 
 ```{r}
-# Longitud en caracteres
 corpus_mini |>
   mutate(n_chars = nchar(palabra)) |>
   select(palabra, silabas, n_chars)
@@ -314,12 +396,10 @@ glimpse(corpus)
 ### Primera exploración
 
 ```{r}
-# ¿Cuántos discursos por partido?
 corpus |> count(partido)
 ```
 
 ```{r}
-# Longitud media por partido
 corpus |>
   group_by(partido) |>
   summarise(
@@ -330,7 +410,6 @@ corpus |>
 ```
 
 ```{r}
-# El discurso más largo y el más corto
 corpus |>
   select(id, partido, n_palabras) |>
   arrange(desc(n_palabras))
@@ -369,13 +448,10 @@ tokens
 ```
 
 ```{r}
-# ¿Cuántos tokens por partido?
 tokens |> count(partido)
 ```
 
 ### Frecuencias brutas
-
-¿Cuáles son las palabras más usadas?
 
 ```{r}
 tokens |>
@@ -394,8 +470,6 @@ Las **stopwords** son palabras vacías que conviene eliminar antes del análisis
 stop_es <- get_stopwords(language = "es")
 stop_es
 ```
-
-Añadimos palabras específicas de este corpus que tampoco aportan:
 
 ```{r}
 stop_custom <- tibble(word = c(
@@ -421,11 +495,9 @@ tokens_limpios |>
   slice_max(n, n = 15)
 ```
 
-Ahora sí emergen las palabras sustantivas de cada discurso.
-
 ### TF-IDF: palabras distintivas
 
-La **frecuencia bruta** favorece palabras comunes a ambos partidos. El **TF-IDF** (*Term Frequency–Inverse Document Frequency*) identifica las palabras más características de cada partido frente al otro: penaliza lo que todos dicen y premia lo que dice uno solo.
+La **frecuencia bruta** favorece palabras comunes a ambos partidos. El **TF-IDF** (*Term Frequency–Inverse Document Frequency*) identifica las palabras más características de cada partido frente al otro.
 
 ```{r}
 tfidf <- tokens_limpios |>
@@ -454,14 +526,11 @@ El **NRC Emotion Lexicon** asocia palabras a 8 emociones básicas (alegría, tri
 ```{r}
 library(syuzhet)
 
-# Ejemplo con palabras individuales
 get_nrc_sentiment(
   c("migrante", "ilegal", "acogida", "expulsión", "derechos"),
   language = "spanish"
 )
 ```
-
-Aplicamos el NRC a todo el corpus:
 
 ```{r}
 palabras_unicas <- unique(tokens_limpios$palabra)
@@ -472,7 +541,6 @@ nrc_scores$palabra <- palabras_unicas
 tokens_nrc <- tokens_limpios |>
   left_join(nrc_scores, by = "palabra")
 
-# Perfil emocional por partido
 emociones <- tokens_nrc |>
   group_by(partido) |>
   summarise(
@@ -492,12 +560,11 @@ emociones
 ```
 
 ```{r}
-# Polaridad relativa
 emociones |>
   mutate(
-    total     = negativo + positivo,
-    pct_neg   = round(negativo / total * 100, 1),
-    pct_pos   = round(positivo / total * 100, 1)
+    total   = negativo + positivo,
+    pct_neg = round(negativo / total * 100, 1),
+    pct_pos = round(positivo / total * 100, 1)
   ) |>
   select(partido, negativo, positivo, pct_neg, pct_pos)
 ```
@@ -547,10 +614,7 @@ summary(corpus_q)
 
 ### Tokens y DFM
 
-En quanteda la tokenización y el análisis de frecuencias se separan en dos pasos:
-
 ```{r}
-# Tokenizar
 toks <- tokens(corpus_q,
                remove_punct = TRUE,
                remove_numbers = TRUE,
@@ -562,8 +626,6 @@ toks <- tokens(corpus_q,
 toks
 ```
 
-La **DFM** (*Document-Feature Matrix*) es la estructura central de quanteda: una tabla donde las filas son documentos y las columnas son palabras.
-
 ```{r}
 dfm_corpus <- dfm(toks)
 dfm_corpus
@@ -572,53 +634,39 @@ dfm_corpus
 ### Frecuencias globales
 
 ```{r}
-# Las 20 palabras más frecuentes del corpus completo
 topfeatures(dfm_corpus, n = 20)
 ```
 
 ```{r}
-# Por partido — agrupando documentos
 dfm_partido <- dfm_group(dfm_corpus, groups = corpus_q$partido)
 topfeatures(dfm_partido, n = 15)
 ```
 
 ### KWIC — palabras en contexto
 
-**KWIC** (*Keywords in Context*) muestra cómo se usa una palabra en su contexto inmediato. Es una herramienta fundamental en lingüística de corpus.
-
 ```{r}
-# Contexto de "inmigrantes"
 kwic(toks, pattern = "inmigrantes", window = 5)
 ```
 
 ```{r}
-# Contexto de "ilegales"
 kwic(toks, pattern = "ilegales", window = 5)
 ```
 
 ```{r}
-# Buscar con comodín — todas las formas de "migr*"
 kwic(toks, pattern = "migr*", window = 4)
 ```
 
 ### Estadísticas de keyness
 
-**Keyness** mide qué palabras son estadísticamente más características de un grupo de documentos frente a otro — similar al TF-IDF pero con contraste estadístico.
-
 ```{r}
-# VOX vs. Podemos
 keyness <- textstat_keyness(dfm_corpus,
                             target = corpus_q$partido == "VOX")
-
-# Palabras más características de VOX (valores positivos)
-# y de Podemos (valores negativos)
 head(keyness, 20)
 ```
 
 ### Similaridad entre documentos
 
 ```{r}
-# ¿Qué discursos se parecen más entre sí?
 similitud <- textstat_simil(dfm_corpus, method = "cosine")
 as.data.frame(similitud) |>
   arrange(desc(cosine)) |>
@@ -640,7 +688,7 @@ as.data.frame(similitud) |>
 
 ### Qué es udpipe
 
-`udpipe` permite anotar texto en español automáticamente: asigna a cada palabra su **categoría gramatical** (sustantivo, verbo, adjetivo...), su **lema** y sus **dependencias sintácticas**. Esto va mucho más allá del análisis de frecuencias — nos permite preguntar, por ejemplo, qué adjetivos acompañan a la palabra "inmigrante".
+`udpipe` permite anotar texto en español automáticamente: asigna a cada palabra su **categoría gramatical** (sustantivo, verbo, adjetivo...), su **lema** y sus **dependencias sintácticas**.
 
 ```{r}
 #| eval: false
@@ -649,21 +697,13 @@ library(udpipe)
 
 ### Descargar el modelo de español
 
-Solo hace falta hacerlo una vez:
-
 ```{r}
 #| eval: false
 udpipe_download_model(language = "spanish")
-```
-
-```{r}
-#| eval: false
 modelo <- udpipe_load_model("spanish-gsd-ud-2.5-191206.udpipe")
 ```
 
 ### Anotar un discurso
-
-Anotamos el primer discurso de VOX como ejemplo:
 
 ```{r}
 #| eval: false
@@ -675,7 +715,6 @@ anotado <- udpipe_annotate(modelo, x = texto_vox, doc_id = "VOX_1") |>
   as.data.frame() |>
   as_tibble()
 
-# Ver las primeras filas
 anotado |>
   select(token, lemma, upos, dep_rel) |>
   head(20)
@@ -685,13 +724,10 @@ anotado |>
 
 ```{r}
 #| eval: false
-# Distribución de categorías gramaticales
 anotado |>
   count(upos, sort = TRUE) |>
   filter(!is.na(upos))
 ```
-
-Las categorías más comunes en texto político:
 
 | UPOS | Categoría |
 |---|---|
@@ -701,33 +737,16 @@ Las categorías más comunes en texto político:
 | ADV | Adverbio |
 | PROPN | Nombre propio |
 
-### Lemas: normalización de formas
-
-El **lema** es la forma canónica de una palabra. Trabajar con lemas evita que "inmigrante", "inmigrantes" e "inmigrando" se cuenten como palabras distintas.
+### Lemas y colocaciones
 
 ```{r}
 #| eval: false
-# Sustantivos más frecuentes (por lema)
-anotado |>
-  filter(upos == "NOUN") |>
-  count(lemma, sort = TRUE) |>
-  head(15)
+anotado |> filter(upos == "NOUN") |> count(lemma, sort = TRUE) |> head(15)
+anotado |> filter(upos == "ADJ")  |> count(lemma, sort = TRUE) |> head(15)
 ```
 
 ```{r}
 #| eval: false
-# Adjetivos más frecuentes
-anotado |>
-  filter(upos == "ADJ") |>
-  count(lemma, sort = TRUE) |>
-  head(15)
-```
-
-### Colocaciones: qué adjetivos acompañan a "inmigrante"
-
-```{r}
-#| eval: false
-# Adjetivos que modifican a sustantivos relacionados con inmigración
 terminos_inm <- c("inmigrante", "migrante", "extranjero", "ilegal")
 
 anotado |>
@@ -739,8 +758,6 @@ anotado |>
 
 ```{r}
 #| eval: false
-
-# Anotar todos los discursos (puede tardar unos minutos)
 corpus_anotado <- udpipe_annotate(
   modelo,
   x      = corpus$texto,
@@ -750,19 +767,13 @@ corpus_anotado <- udpipe_annotate(
   as_tibble() |>
   left_join(corpus |> select(id, partido), by = c("doc_id" = "id"))
 
-# Guardar para no tener que repetir
 saveRDS(corpus_anotado, "corpus_anotado.rds")
 ```
 
 ```{r}
 #| eval: false
-# Cargar si ya lo tienes guardado
 corpus_anotado <- readRDS("corpus_anotado.rds")
-```
 
-```{r}
-#| eval: false
-# Adjetivos más frecuentes por partido
 corpus_anotado |>
   filter(upos == "ADJ") |>
   count(partido, lemma, sort = TRUE) |>
@@ -799,8 +810,6 @@ corpus_anotado |>
 
 ### Gráfico de barras
 
-¿Cuántas palabras tiene cada discurso?
-
 ```{r}
 ggplot(corpus, aes(x = reorder(id, n_palabras), y = n_palabras, fill = partido)) +
   geom_col() +
@@ -817,8 +826,6 @@ ggplot(corpus, aes(x = reorder(id, n_palabras), y = n_palabras, fill = partido))
 
 ### Histograma
 
-Distribución de longitudes:
-
 ```{r}
 ggplot(corpus, aes(x = n_palabras, fill = partido)) +
   geom_histogram(bins = 10, color = "white", alpha = 0.8) +
@@ -833,8 +840,6 @@ ggplot(corpus, aes(x = n_palabras, fill = partido)) +
 ```
 
 ### Frecuencias de palabras
-
-Las 15 palabras más frecuentes sin stopwords:
 
 ```{r}
 tokens_limpios |>
@@ -874,13 +879,26 @@ emociones |>
   theme_minimal(base_size = 13)
 ```
 
+### Referencia visual: R Graph Gallery
+
+Para saber qué tipo de gráfico usar según tus datos, la [**R Graph Gallery**](https://r-graph-gallery.com/ggplot2-package.html) es el recurso más completo disponible. Organiza todos los tipos de gráficos de `ggplot2` por categoría y tipo de variable, e incluye el código completo para cada uno.
+
+| Tipo de datos | Gráfico recomendado | Enlace |
+|---|---|---|
+| Una variable numérica | Histograma, densidad | [ver](https://r-graph-gallery.com/histogram.html) |
+| Una variable categórica | Barras, lollipop | [ver](https://r-graph-gallery.com/barplot.html) |
+| Dos variables numéricas | Dispersión, líneas | [ver](https://r-graph-gallery.com/scatterplot.html) |
+| Numérica + categórica | Boxplot, violin | [ver](https://r-graph-gallery.com/boxplot.html) |
+| Frecuencias de texto | Barras horizontales, wordcloud | [ver](https://r-graph-gallery.com/wordcloud.html) |
+| Evolución temporal | Líneas, áreas | [ver](https://r-graph-gallery.com/line-plot.html) |
+
 ::: {.ejercicio}
 **Ejercicio 8**
 
 1. Modifica el gráfico de barras para mostrar solo los 10 términos más frecuentes.
 2. Cambia los colores usando `scale_fill_manual()` con los colores que prefieras.
 3. Añade un subtítulo al gráfico de perfil emocional con `subtitle =` dentro de `labs()`.
-4. **Reto:** Representa el TF-IDF calculado en la Parte IV como un gráfico de barras horizontal separado por partido.
+4. **Reto:** Entra en la R Graph Gallery y elige un tipo de gráfico que no hayamos usado en este curso. Adáptalo a alguna variable del corpus.
 :::
 
 ---
@@ -891,8 +909,11 @@ emociones |>
 |---|---|
 | [R for Data Science](https://r4ds.hadley.nz) | Manual de referencia del tidyverse, gratuito online |
 | [Text Mining with R](https://tidytextmining.com) | Análisis de texto con tidytext |
+| [R Graph Gallery](https://r-graph-gallery.com/ggplot2-package.html) | Galería completa de gráficos ggplot2 con código |
+| [Cheatsheets de Posit](https://posit.co/resources/cheatsheets/) | Hojas de referencia rápida de todos los paquetes |
 | [quanteda tutorials](https://tutorials.quanteda.io) | Tutoriales oficiales de quanteda |
 | [udpipe documentation](https://bnosac.github.io/udpipe/en/) | Documentación de udpipe |
+| [CRAN Task Views](https://cran.r-project.org/web/views/) | Paquetes agrupados por área temática |
 | Posit Community | Foro oficial de la comunidad R |
 
 ## Entornos de desarrollo (IDEs)
