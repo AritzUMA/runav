@@ -2,16 +2,31 @@
 :root {
   --unav-rojo: #c8102e;
   --unav-negro: #1a1714;
-  --unav-crema: #faf8f4;
+  --unav-crema: #f5f0eb;
+  --fondo: #f5f0eb;
 }
 
-/* Navbar */
+/* Fondo general — crema suave */
+body {
+  background-color: var(--fondo) !important;
+}
+
+.quarto-container, .page-layout-article {
+  background-color: var(--fondo) !important;
+}
+
+/* Navbar — solo logo y buscador */
 .navbar {
   background-color: var(--unav-negro) !important;
   border-bottom: 3px solid var(--unav-rojo);
 }
 
-.navbar-brand, .navbar-nav .nav-link {
+.navbar-brand {
+  color: white !important;
+  font-family: Georgia, serif;
+}
+
+.navbar-nav .nav-link {
   color: rgba(255,255,255,0.85) !important;
   font-family: Georgia, serif;
 }
@@ -20,11 +35,11 @@
   color: white !important;
 }
 
-/* Hero banner */
+/* Hero banner — centrado */
 .hero-banner {
   background: var(--unav-negro);
   color: white;
-  padding: 4rem 2rem 3.5rem;
+  padding: 4.5rem 2rem 4rem;
   margin-bottom: 2.5rem;
   border-bottom: 4px solid var(--unav-rojo);
   text-align: center;
@@ -32,11 +47,12 @@
 
 .hero-banner h1 {
   font-family: Georgia, serif;
-  font-size: 3.2rem;
+  font-size: 3.4rem;
   font-weight: 400;
   margin-bottom: 0.6rem;
   line-height: 1.15;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .hero-banner h1 em {
@@ -45,31 +61,35 @@
 }
 
 .hero-banner .subtitulo {
-  color: rgba(255,255,255,0.55);
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
+  margin-bottom: 0.6rem;
+  text-align: center;
 }
 
 .hero-banner .gradun {
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.7);
   font-family: Georgia, serif;
   font-size: 1.05rem;
   font-style: italic;
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
+  text-align: center;
 }
 
 .hero-banner .meta-grid {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   flex-wrap: wrap;
   justify-content: center;
+  text-align: center;
 }
 
 .hero-banner .meta-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-banner .meta-item .etiqueta {
@@ -78,15 +98,15 @@
   letter-spacing: 0.1em;
   color: rgba(255,255,255,0.35);
   display: block;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .hero-banner .meta-item .valor {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: rgba(255,255,255,0.8);
 }
 
-/* Encabezados de seccion */
+/* Encabezados de sección */
 h2 {
   font-family: Georgia, serif;
   color: var(--unav-negro);
@@ -101,10 +121,16 @@ h3 {
   margin-top: 1.75rem;
 }
 
+h4 {
+  color: var(--unav-negro);
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
 /* Caja de ejercicio */
 .ejercicio {
-  background: #fffbf0;
-  border: 1px solid #e8d89a;
+  background: #f5edd8;
+  border: 1px solid #e0cc8a;
   border-left: 5px solid #c8a020;
   border-radius: 4px;
   padding: 1.25rem 1.5rem;
@@ -112,6 +138,10 @@ h3 {
 }
 
 /* Tabla de contenidos */
+#TOC {
+  background-color: transparent;
+}
+
 #TOC a {
   color: var(--unav-negro);
 }
@@ -120,8 +150,18 @@ h3 {
   color: var(--unav-rojo);
 }
 
-/* Codigo */
+/* Código */
 pre, code {
   font-family: "JetBrains Mono", "Fira Code", monospace;
   font-size: 0.85em;
+}
+
+/* Bloques de código — fondo ligeramente más oscuro que el fondo general */
+pre.sourceCode {
+  background-color: #ede8e1 !important;
+}
+
+/* Tablas */
+table {
+  background-color: transparent;
 }

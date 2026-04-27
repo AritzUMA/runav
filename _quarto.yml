@@ -2,29 +2,14 @@ project:
   type: website
 
 website:
-  title: "Introducción a R para Lingüistas"
+  title: ""
   navbar:
     background: dark
-    left:
-      - text: "Antes de empezar"
-        href: index.qmd#instalacion
-      - text: "Parte I: R básico"
-        href: index.qmd#parte-i
-      - text: "Parte II: Tidyverse"
-        href: index.qmd#parte-ii
-      - text: "Parte III: Corpus"
-        href: index.qmd#parte-iii
-      - text: "Parte IV: tidytext"
-        href: index.qmd#parte-iv
-      - text: "Parte V: quanteda"
-        href: index.qmd#parte-v
-      - text: "Parte VI: udpipe"
-        href: index.qmd#parte-vi
-      - text: "Parte VII: ggplot2"
-        href: index.qmd#parte-vii
     right:
       - text: "Universidad de Navarra"
         href: https://www.unav.edu
+      - icon: search
+        href: search.html
 
 format:
   html:
