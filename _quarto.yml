@@ -2,14 +2,12 @@ project:
   type: website
 
 website:
-  title: ""
+  title: "Introducción a R para Lingüistas"
   navbar:
     background: dark
     right:
       - text: "Universidad de Navarra"
         href: https://www.unav.edu
-      - icon: search
-        href: search.html
 
 format:
   html:
