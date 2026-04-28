@@ -8,8 +8,12 @@ website:
     logo: "https://www.unav.edu/documents/10162/30622995/Marca+Universidad+de+Navarra_200__white.png/75601112-72f9-4940-a060-0a15ab28a11c?t=1635332708035"
     logo-alt: "Universidad de Navarra"
     right:
-      - text: "Universidad de Navarra"
-        href: https://www.unav.edu
+      - icon: github
+        href: https://github.com/AritzUMA/runav
+        aria-label: GitHub
+      - icon: twitter-x
+        href: https://twitter.com/aritz_gorostiza
+        aria-label: Twitter
 
 format:
   html:
