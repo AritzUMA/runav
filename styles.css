@@ -26,6 +26,11 @@ body {
   font-family: Georgia, serif;
 }
 
+/* Ocultar el texto del título en el navbar, mantener solo el logo */
+.navbar-brand span.navbar-title {
+  display: none;
+}
+
 .navbar-nav .nav-link {
   color: rgba(255,255,255,0.85) !important;
   font-family: Georgia, serif;
