@@ -31,6 +31,13 @@ body {
   display: none;
 }
 
+/* Logo más grande y natural */
+.navbar-brand img {
+  height: 38px !important;
+  width: auto !important;
+  opacity: 0.95;
+}
+
 .navbar-nav .nav-link {
   color: rgba(255,255,255,0.85) !important;
   font-family: Georgia, serif;
