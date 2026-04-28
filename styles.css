@@ -26,9 +26,20 @@ body {
   font-family: Georgia, serif;
 }
 
-/* Ocultar el texto del título en el navbar, mantener solo el logo */
+/* Ocultar el texto del título en el navbar y en el menú móvil */
 .navbar-brand span.navbar-title {
   display: none;
+}
+
+.navbar-nav .nav-item .sidebar-title {
+  display: none;
+}
+
+/* Ocultar título en menú hamburguesa móvil */
+#quarto-sidebar .sidebar-title,
+.offcanvas-title,
+.navbar-toggler + .navbar-brand .navbar-title {
+  display: none !important;
 }
 
 /* Logo más grande y natural */
